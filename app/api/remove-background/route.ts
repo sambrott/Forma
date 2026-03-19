@@ -6,11 +6,21 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
+/**
+ * Background removal via remove.bg API.
+ * Set REMOVE_BG_API_KEY in environment variables.
+ * Free tier: 50 previews/month. Paid: from $0.99/100 calls.
+ */
 export async function POST(req: NextRequest) {
   try {
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown'
     if (!checkRateLimit(ip, FREE_LIMITS.aiUsesPerDay)) {
       return NextResponse.json({ error: 'Daily AI limit reached (3 uses). Upgrade to Pro for unlimited.' }, { status: 429 })
+    }
+
+    const apiKey = process.env.REMOVE_BG_API_KEY
+    if (!apiKey) {
+      return NextResponse.json({ error: 'Background removal is not configured. Please add REMOVE_BG_API_KEY.' }, { status: 503 })
     }
 
     const formData = await req.formData()
@@ -21,12 +31,24 @@ export async function POST(req: NextRequest) {
     }
 
     const bytes = await file.arrayBuffer()
-    const blob = new Blob([bytes], { type: file.type })
 
-    // @imgly/background-removal-node uses dynamic imports internally
-    const { removeBackground } = await import('@imgly/background-removal-node')
-    const resultBlob = await removeBackground(blob)
-    const resultBuffer = Buffer.from(await resultBlob.arrayBuffer())
+    const outgoingForm = new FormData()
+    outgoingForm.append('image_file', new Blob([bytes], { type: file.type }), file.name)
+    outgoingForm.append('size', 'auto')
+
+    const res = await fetch('https://api.remove.bg/v1.0/removebg', {
+      method: 'POST',
+      headers: { 'X-Api-Key': apiKey },
+      body: outgoingForm,
+    })
+
+    if (!res.ok) {
+      const errText = await res.text()
+      console.error('remove.bg error:', errText)
+      return NextResponse.json({ error: 'Background removal failed. Please try again.' }, { status: 500 })
+    }
+
+    const resultBuffer = Buffer.from(await res.arrayBuffer())
 
     return new NextResponse(new Uint8Array(resultBuffer), {
       headers: {

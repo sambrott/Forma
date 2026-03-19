@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "app/api/extract-audio/route.ts": { "maxDuration": 60 },
+    "app/api/trim-video/route.ts": { "maxDuration": 60 },
+    "app/api/transcribe-audio/route.ts": { "maxDuration": 60 },
+    "app/api/pdf-to-excel/route.ts": { "maxDuration": 60 },
+    "app/api/summarise-doc/route.ts": { "maxDuration": 60 },
+    "app/api/remove-background/route.ts": { "maxDuration": 60 }
+  }
+}

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { writeFile, readFile } from 'fs/promises'
 import ffmpeg from 'fluent-ffmpeg'
-import ffmpegPath from 'ffmpeg-static'
+import ffmpegInstaller from '@ffmpeg-installer/ffmpeg'
 import { deleteFile } from '@/lib/delete-file'
 import { FREE_LIMITS } from '@/lib/limits'
 
@@ -9,7 +9,7 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
-if (ffmpegPath) ffmpeg.setFfmpegPath(ffmpegPath)
+ffmpeg.setFfmpegPath(ffmpegInstaller.path)
 
 function runFfmpeg(input: string, output: string, format: string, bitrate: string): Promise<void> {
   return new Promise((resolve, reject) => {
