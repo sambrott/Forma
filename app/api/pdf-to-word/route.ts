@@ -3,6 +3,7 @@ import pdf from 'pdf-parse'
 import { FREE_LIMITS } from '@/lib/limits'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
 /**
