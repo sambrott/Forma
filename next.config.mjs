@@ -9,13 +9,6 @@ const nextConfig = {
       'pdf-parse',
     ],
   },
-  serverExternalPackages: [
-    'sharp',
-    'fluent-ffmpeg',
-    '@ffmpeg-installer/ffmpeg',
-    'pdf-lib',
-    'pdf-parse',
-  ],
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.externals = [
