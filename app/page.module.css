@@ -46,6 +46,10 @@
     grid-template-columns: 1fr;
     padding-top: var(--space-8);
   }
+  .heroLeft,
+  .heroRight {
+    min-width: 0; /* prevent grid children from overflowing viewport */
+  }
   .heroLeft {
     padding-top: 0;
   }
