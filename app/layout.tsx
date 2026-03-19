@@ -2,7 +2,11 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Script from 'next/script'
+import { Suspense } from 'react'
 import Nav from '@/components/Nav'
+import IntroAnimation from '@/components/IntroAnimation'
+import { PostHogProvider } from '@/components/PostHogProvider'
+import { PostHogPageView } from '@/components/PostHogPageView'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -34,8 +38,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body className={`${GeistSans.variable} ${GeistMono.variable}`}>
-        <Nav />
-        {children}
+        <PostHogProvider>
+          <Suspense fallback={null}>
+            <PostHogPageView />
+          </Suspense>
+          <IntroAnimation />
+          <Nav />
+          {children}
+        </PostHogProvider>
       </body>
     </html>
   )

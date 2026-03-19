@@ -3,8 +3,9 @@ import { writeFile } from 'fs/promises'
 import { createReadStream } from 'fs'
 import { getOpenAI } from '@/lib/openai'
 import { deleteFile } from '@/lib/delete-file'
-import { checkRateLimit } from '@/lib/rate-limit'
 import { FREE_LIMITS } from '@/lib/limits'
+import { createServerSupabaseClient } from '@/lib/supabase/server'
+import { checkAILimit } from '@/lib/check-ai-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -13,9 +14,21 @@ export const maxDuration = 60
 export async function POST(req: NextRequest) {
   let tmpPath = ''
   try {
-    const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown'
-    if (!checkRateLimit(ip, FREE_LIMITS.aiUsesPerDay)) {
-      return NextResponse.json({ error: 'Daily AI limit reached (3 uses). Upgrade to Pro for unlimited.' }, { status: 429 })
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      const supabase = await createServerSupabaseClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        return NextResponse.json({ error: 'Sign in required to use AI tools.', requiresAuth: true }, { status: 401 })
+      }
+
+      const limit = await checkAILimit(user.id, 'transcribe-audio')
+      if (!limit.allowed) {
+        return NextResponse.json({
+          error: `Daily limit reached. Free users get ${limit.limit} AI uses per day.`,
+          upgrade: true,
+        }, { status: 429 })
+      }
     }
 
     const formData = await req.formData()
@@ -32,7 +45,6 @@ export async function POST(req: NextRequest) {
     await writeFile(tmpPath, buffer)
 
     const openai = getOpenAI()
-
     const responseFormat = format === 'srt' ? 'srt' : format === 'vtt' ? 'vtt' : 'text'
 
     const transcription = await openai.audio.transcriptions.create({
@@ -42,7 +54,6 @@ export async function POST(req: NextRequest) {
     })
 
     const text = typeof transcription === 'string' ? transcription : (transcription as any).text || ''
-
     return NextResponse.json({ text })
   } catch (err) {
     console.error('transcribe-audio error:', err)

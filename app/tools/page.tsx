@@ -1,11 +1,50 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { Suspense } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import ToolCard from '@/components/ToolCard'
-import { TOOLS, CATEGORIES, getToolsByCategory } from '@/lib/tools'
+import { TOOLS } from '@/lib/tools'
 import styles from './page.module.css'
 
-export const metadata: Metadata = {
-  title: 'All Tools — Free Online File Tools | Forma',
-  description: 'Browse all free online tools: compress PDFs, convert images, extract audio, transcribe, and more. Private and instant.',
+const FILTER_CATEGORIES = ['All', 'PDF', 'AI', 'Image', 'Audio', 'Video', 'Dev'] as const
+
+function ToolsContent() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const active = searchParams.get('cat') ?? 'All'
+
+  const filtered = active === 'All'
+    ? TOOLS
+    : TOOLS.filter(t => t.cat === active)
+
+  function setCategory(cat: string) {
+    const params = new URLSearchParams(searchParams)
+    if (cat === 'All') params.delete('cat')
+    else params.set('cat', cat)
+    router.push(`/tools?${params.toString()}`, { scroll: false })
+  }
+
+  return (
+    <>
+      <div className={styles.tabBar}>
+        {FILTER_CATEGORIES.map(cat => (
+          <button
+            key={cat}
+            className={`${styles.tab} ${active === cat ? styles.tabActive : ''}`}
+            onClick={() => setCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <div className={styles.grid}>
+        {filtered.map(tool => (
+          <ToolCard key={tool.slug} tool={tool} />
+        ))}
+      </div>
+    </>
+  )
 }
 
 export default function ToolsPage() {
@@ -22,22 +61,9 @@ export default function ToolsPage() {
         </p>
       </div>
 
-      {CATEGORIES.map(cat => {
-        const tools = getToolsByCategory(cat)
-        if (!tools.length) return null
-        return (
-          <section key={cat} className={styles.section}>
-            <h2 className={styles.catLabel}>{cat}</h2>
-            <div className={styles.grid}>
-              {tools.map(tool => (
-                <ToolCard key={tool.slug} tool={tool} />
-              ))}
-            </div>
-          </section>
-        )
-      })}
-
-      <div id="ad-slot-tool" />
+      <Suspense fallback={<div className={styles.grid} />}>
+        <ToolsContent />
+      </Suspense>
     </main>
   )
 }

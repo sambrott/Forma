@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import pdf from 'pdf-parse'
 import { getAnthropic } from '@/lib/anthropic'
-import { checkRateLimit } from '@/lib/rate-limit'
 import { FREE_LIMITS } from '@/lib/limits'
+import { createServerSupabaseClient } from '@/lib/supabase/server'
+import { checkAILimit } from '@/lib/check-ai-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -10,9 +11,21 @@ export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
   try {
-    const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown'
-    if (!checkRateLimit(ip, FREE_LIMITS.aiUsesPerDay)) {
-      return NextResponse.json({ error: 'Daily AI limit reached (3 uses). Upgrade to Pro for unlimited.' }, { status: 429 })
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      const supabase = await createServerSupabaseClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        return NextResponse.json({ error: 'Sign in required to use AI tools.', requiresAuth: true }, { status: 401 })
+      }
+
+      const limit = await checkAILimit(user.id, 'summarise-doc')
+      if (!limit.allowed) {
+        return NextResponse.json({
+          error: `Daily limit reached. Free users get ${limit.limit} AI uses per day.`,
+          upgrade: true,
+        }, { status: 429 })
+      }
     }
 
     const formData = await req.formData()
@@ -29,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     const client = getAnthropic()
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: 2048,
       messages: [{
         role: 'user',
@@ -44,7 +57,6 @@ export async function POST(req: NextRequest) {
     }
 
     const summary = JSON.parse(jsonMatch[0])
-
     return NextResponse.json(summary)
   } catch (err) {
     console.error('summarise-doc error:', err)

@@ -1,0 +1,63 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeOut 0.4s ease 2.0s forwards;
+}
+
+.logo {
+  display: flex;
+  align-items: flex-end;
+}
+
+.word {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  opacity: 0;
+  animation: riseIn 0.5s ease 0.15s forwards;
+}
+
+.dot {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--accent);
+  display: inline-block;
+  opacity: 0;
+  transform-origin: center bottom;
+  animation:
+    dotAppear 0.15s ease 0.6s forwards,
+    bounce 0.55s cubic-bezier(0.36, 0, 0.66, -0.56) 0.62s;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dotAppear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes bounce {
+  0%   { transform: translateY(0)     scaleY(1)    scaleX(1);    }
+  28%  { transform: translateY(-20px) scaleY(1.08) scaleX(0.94); }
+  52%  { transform: translateY(0)     scaleY(0.82) scaleX(1.14); }
+  70%  { transform: translateY(-7px)  scaleY(1.04) scaleX(0.97); }
+  85%  { transform: translateY(0)     scaleY(0.96) scaleX(1.03); }
+  100% { transform: translateY(0)     scaleY(1)    scaleX(1);    }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; pointer-events: none; }
+}

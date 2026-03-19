@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useState } from 'react'
 import styles from './HeadlineAnimation.module.css'
 
 export default function HeadlineAnimation() {
@@ -10,8 +10,15 @@ export default function HeadlineAnimation() {
   const activeRef = useRef(false)
   const rafRef = useRef<number>(0)
   const opacityRef = useRef(0)
+  const sizeRef = useRef({ w: 0, h: 0 })
+  const [isTouch, setIsTouch] = useState(false)
 
-  const draw = useCallback(() => {
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(hover: none) and (pointer: coarse)').matches)
+  }, [])
+
+  // Desktop halftone hover effect
+  const drawDesktop = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -66,9 +73,62 @@ export default function HeadlineAnimation() {
     }
 
     ctx.restore()
-    rafRef.current = requestAnimationFrame(draw)
+    rafRef.current = requestAnimationFrame(drawDesktop)
   }, [])
 
+  // Mobile ambient wave animation
+  useEffect(() => {
+    if (!isTouch) return
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    let raf: number
+    let start: number | null = null
+
+    function drawWave(ts: number) {
+      if (!start) start = ts
+      const t = (ts - start) / 1000
+
+      if (!canvas) return
+      const ctx = canvas.getContext('2d')
+      const { w: W, h: H } = sizeRef.current
+      if (!ctx || !W || !H) { raf = requestAnimationFrame(drawWave); return }
+
+      ctx.clearRect(0, 0, W, H)
+
+      const SPACING = 16
+      const cols = Math.ceil(W / SPACING) + 1
+      const rows = Math.ceil(H / SPACING) + 1
+      const SPEED = 0.6
+      const WAVELENGTH = 0.8
+      const AMPLITUDE = 0.18
+
+      for (let r = 0; r <= rows; r++) {
+        for (let c = 0; c <= cols; c++) {
+          const x = c * SPACING
+          const y = r * SPACING
+          const wave = Math.sin((x / (W * WAVELENGTH)) * Math.PI * 2 - t * SPEED * Math.PI * 2)
+          const norm = (wave + 1) / 2
+          const alpha = norm * AMPLITUDE
+
+          if (alpha < 0.01) continue
+
+          const isOrange = norm > 0.8
+          const [rc, gc, bc] = isOrange ? [232, 98, 42] : [28, 22, 18]
+          ctx.fillStyle = `rgba(${rc},${gc},${bc},${alpha.toFixed(3)})`
+          ctx.beginPath()
+          ctx.arc(x, y, 1.2, 0, Math.PI * 2)
+          ctx.fill()
+        }
+      }
+      raf = requestAnimationFrame(drawWave)
+    }
+
+    raf = requestAnimationFrame(drawWave)
+    return () => cancelAnimationFrame(raf)
+  }, [isTouch])
+
+  // Resize + desktop events
   useEffect(() => {
     const canvas = canvasRef.current
     const wrap = wrapRef.current
@@ -81,35 +141,43 @@ export default function HeadlineAnimation() {
       canvas.height = rect.height * dpr
       canvas.style.width = rect.width + 'px'
       canvas.style.height = rect.height + 'px'
+      sizeRef.current = { w: rect.width, h: rect.height }
     }
 
     const ro = new ResizeObserver(resize)
     ro.observe(wrap)
     resize()
 
-    const onEnter = () => { activeRef.current = true; rafRef.current = requestAnimationFrame(draw) }
-    const onLeave = () => { activeRef.current = false; mouseRef.current = { x: -1000, y: -1000 } }
-    const onMove = (e: MouseEvent) => {
-      const rect = wrap.getBoundingClientRect()
-      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
-    }
+    if (!isTouch) {
+      const onEnter = () => { activeRef.current = true; rafRef.current = requestAnimationFrame(drawDesktop) }
+      const onLeave = () => { activeRef.current = false; mouseRef.current = { x: -1000, y: -1000 } }
+      const onMove = (e: MouseEvent) => {
+        const rect = wrap.getBoundingClientRect()
+        mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+      }
 
-    wrap.addEventListener('mouseenter', onEnter)
-    wrap.addEventListener('mouseleave', onLeave)
-    wrap.addEventListener('mousemove', onMove)
+      wrap.addEventListener('mouseenter', onEnter)
+      wrap.addEventListener('mouseleave', onLeave)
+      wrap.addEventListener('mousemove', onMove)
+
+      return () => {
+        ro.disconnect()
+        cancelAnimationFrame(rafRef.current)
+        wrap.removeEventListener('mouseenter', onEnter)
+        wrap.removeEventListener('mouseleave', onLeave)
+        wrap.removeEventListener('mousemove', onMove)
+      }
+    }
 
     return () => {
       ro.disconnect()
       cancelAnimationFrame(rafRef.current)
-      wrap.removeEventListener('mouseenter', onEnter)
-      wrap.removeEventListener('mouseleave', onLeave)
-      wrap.removeEventListener('mousemove', onMove)
     }
-  }, [draw])
+  }, [isTouch, drawDesktop])
 
   return (
     <div ref={wrapRef} className={styles.wrap} style={{ padding: 32 }}>
-      <canvas ref={canvasRef} className={styles.canvas} />
+      <canvas ref={canvasRef} className={styles.canvas} style={{ pointerEvents: 'none' }} />
       <div className={styles.text}>
         <span>Work done.</span>
         <br />

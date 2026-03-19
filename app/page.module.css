@@ -41,12 +41,23 @@
   padding: 0 var(--space-1);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .main {
     grid-template-columns: 1fr;
     padding-top: var(--space-8);
   }
   .heroLeft {
     padding-top: 0;
+  }
+  .heroRight {
+    border-left: none;
+    border-top: 1px solid var(--border-soft);
+    padding-top: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: var(--space-6) 20px var(--space-16);
   }
 }

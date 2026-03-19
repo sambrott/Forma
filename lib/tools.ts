@@ -15,6 +15,7 @@ export const TOOLS: Tool[] = [
   { slug: 'json-formatter',    name: 'JSON Formatter',    desc: 'Format, validate, and minify JSON',        cat: 'Dev',   isAI: false, icon: 'code' },
   { slug: 'base64',            name: 'Base64',            desc: 'Encode and decode Base64 strings',         cat: 'Dev',   isAI: false, icon: 'hash' },
   { slug: 'url-encoder',       name: 'URL Encoder',       desc: 'Encode and decode URL strings',            cat: 'Dev',   isAI: false, icon: 'link' },
+  { slug: 'receipt-to-excel', name: 'Receipt → Excel',   desc: 'Photograph any receipt, get a spreadsheet', cat: 'AI',    isAI: true,  icon: 'receipt',       accepts: ['image/*','.pdf'] },
 ]
 
 export const FEATURED_TOOLS = TOOLS.slice(0, 6)

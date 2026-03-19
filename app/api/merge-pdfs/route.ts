@@ -1,12 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PDFDocument } from 'pdf-lib'
 import { FREE_LIMITS } from '@/lib/limits'
+import { checkCookieRateLimit, setUsageCookie } from '@/lib/rate-limit-cookie'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
+  const rateLimit = checkCookieRateLimit(req, 'merge-pdfs')
+  if (!rateLimit.allowed) {
+    return NextResponse.json({
+      error: `Daily limit reached. Free users get ${rateLimit.limit} uses per day.`,
+      resetAt: rateLimit.resetAt,
+      upgrade: true,
+    }, { status: 429 })
+  }
+
   try {
     const formData = await req.formData()
     const files = formData.getAll('files') as File[]
@@ -29,13 +39,15 @@ export async function POST(req: NextRequest) {
     const outputBytes = await merged.save()
     const outputBuffer = Buffer.from(outputBytes)
 
-    return new NextResponse(new Uint8Array(outputBuffer), {
+    const response = new NextResponse(new Uint8Array(outputBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="forma-merged.pdf"`,
         'X-Forma-Processed': 'true',
       },
     })
+    setUsageCookie(response, req, 'merge-pdfs')
+    return response
   } catch (err) {
     console.error('merge-pdfs error:', err)
     return NextResponse.json({ error: 'Failed to merge PDFs. Please try again.' }, { status: 500 })

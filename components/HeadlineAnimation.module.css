@@ -30,7 +30,11 @@
 }
 
 @media (max-width: 768px) {
-  .text {
-    font-size: var(--text-3xl);
-  }
+  .text { font-size: 52px; }
+}
+@media (max-width: 480px) {
+  .text { font-size: 40px; }
+}
+@media (max-width: 360px) {
+  .text { font-size: 34px; }
 }

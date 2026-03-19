@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: [
+      'sharp',
+      'fluent-ffmpeg',
+      '@ffmpeg-installer/ffmpeg',
+      'pdf-lib',
+      'pdf-parse',
+    ],
+  },
   serverExternalPackages: [
     'sharp',
     'fluent-ffmpeg',

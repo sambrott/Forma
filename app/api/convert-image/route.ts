@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import sharp from 'sharp'
 import { FREE_LIMITS } from '@/lib/limits'
+import { checkCookieRateLimit, setUsageCookie } from '@/lib/rate-limit-cookie'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -12,6 +13,15 @@ const MIME: Record<string, string> = {
 }
 
 export async function POST(req: NextRequest) {
+  const rateLimit = checkCookieRateLimit(req, 'convert-image')
+  if (!rateLimit.allowed) {
+    return NextResponse.json({
+      error: `Daily limit reached. Free users get ${rateLimit.limit} uses per day.`,
+      resetAt: rateLimit.resetAt,
+      upgrade: true,
+    }, { status: 429 })
+  }
+
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File
@@ -31,7 +41,7 @@ export async function POST(req: NextRequest) {
       .toFormat(format, { quality })
       .toBuffer()
 
-    return new NextResponse(new Uint8Array(outputBuffer), {
+    const response = new NextResponse(new Uint8Array(outputBuffer), {
       headers: {
         'Content-Type': MIME[format] || 'application/octet-stream',
         'Content-Disposition': `attachment; filename="forma-converted.${format}"`,
@@ -40,6 +50,8 @@ export async function POST(req: NextRequest) {
         'X-Forma-Processed': 'true',
       },
     })
+    setUsageCookie(response, req, 'convert-image')
+    return response
   } catch (err) {
     console.error('convert-image error:', err)
     return NextResponse.json({ error: 'Failed to convert image. Please try again.' }, { status: 500 })

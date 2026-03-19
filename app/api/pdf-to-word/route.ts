@@ -1,18 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import pdf from 'pdf-parse'
 import { FREE_LIMITS } from '@/lib/limits'
+import { checkCookieRateLimit, setUsageCookie } from '@/lib/rate-limit-cookie'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
-/**
- * PDF to Word conversion is complex on serverless.
- * This implementation extracts text from the PDF and wraps it
- * in a minimal .docx structure. For production, integrate with
- * a service like CloudConvert or a LibreOffice-based converter.
- */
 export async function POST(req: NextRequest) {
+  const rateLimit = checkCookieRateLimit(req, 'pdf-to-word')
+  if (!rateLimit.allowed) {
+    return NextResponse.json({
+      error: `Daily limit reached. Free users get ${rateLimit.limit} uses per day.`,
+      resetAt: rateLimit.resetAt,
+      upgrade: true,
+    }, { status: 429 })
+  }
+
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File
@@ -26,7 +30,6 @@ export async function POST(req: NextRequest) {
     const parsed = await pdf(buffer)
     const text = parsed.text
 
-    // Minimal DOCX XML structure
     const contentXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:body>
@@ -57,13 +60,15 @@ export async function POST(req: NextRequest) {
 
     const docxBuffer = await zip.generateAsync({ type: 'nodebuffer' })
 
-    return new NextResponse(new Uint8Array(docxBuffer), {
+    const response = new NextResponse(new Uint8Array(docxBuffer), {
       headers: {
         'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'Content-Disposition': `attachment; filename="forma-output.docx"`,
         'X-Forma-Processed': 'true',
       },
     })
+    setUsageCookie(response, req, 'pdf-to-word')
+    return response
   } catch (err) {
     console.error('pdf-to-word error:', err)
     return NextResponse.json({ error: 'Conversion failed. Please try again.' }, { status: 500 })

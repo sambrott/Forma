@@ -22,3 +22,9 @@
   color: var(--text-sub);
   line-height: var(--leading-relaxed);
 }
+
+@media (max-width: 640px) {
+  .main { padding: 28px 20px 60px; }
+  .title { font-size: 28px; }
+  .desc { font-size: 14px; }
+}
