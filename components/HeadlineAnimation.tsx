@@ -176,7 +176,7 @@ export default function HeadlineAnimation() {
   }, [isTouch, drawDesktop])
 
   return (
-    <div ref={wrapRef} className={styles.wrap} style={{ padding: 32 }}>
+    <div ref={wrapRef} className={styles.wrap}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ pointerEvents: 'none' }} />
       <div className={styles.text}>
         <span>Work done.</span>

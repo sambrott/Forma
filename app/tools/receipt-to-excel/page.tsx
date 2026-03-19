@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import ToolPageLayout from '@/components/ToolPageLayout'
 import ToolDrop from '@/components/ToolDrop'
@@ -14,13 +14,29 @@ export default function ReceiptToExcelPage() {
   const [detail, setDetail] = useState('detailed')
   const { state, process, reset } = useTool('/api/receipt-to-excel')
   const [limitModal, setLimitModal] = useState(false)
+  const [showResult, setShowResult] = useState(false)
   const router = useRouter()
+
+  const isProcessing = state.status === 'uploading' || state.status === 'processing'
+  const isComplete = state.status === 'done'
+
+  useEffect(() => {
+    if (isComplete) {
+      const t = setTimeout(() => setShowResult(true), 350)
+      return () => clearTimeout(t)
+    }
+    setShowResult(false)
+  }, [isComplete])
 
   function handleFiles(files: File[]) {
     process(files[0], { detail }).catch(() => {})
   }
 
-  // Handle auth-required redirect
+  function handleReset() {
+    setShowResult(false)
+    reset()
+  }
+
   if (state.status === 'error' && (state as any).requiresAuth) {
     router.push('/login?next=/tools/receipt-to-excel')
     return null
@@ -49,15 +65,18 @@ export default function ReceiptToExcelPage() {
           </ToolOptions>
         </>
       )}
-      {(state.status === 'uploading' || state.status === 'processing') && (
-        <ProgressBar progress={state.progress} label={state.message} />
-      )}
-      {state.status === 'done' && state.result && (
+      <ProgressBar
+        active={isProcessing}
+        complete={isComplete}
+        stages={['Uploading receipt', 'Reading with AI', 'Extracting data', 'Building spreadsheet']}
+      />
+      {showResult && state.result && (
         <ResultBox
           title="Receipt extracted"
+          conversion="Receipt → Excel"
           downloadUrl={state.result.url}
           downloadName={state.result.filename}
-          onReset={reset}
+          onReset={handleReset}
         />
       )}
       {state.status === 'error' && !(state as any).requiresAuth && (
@@ -72,7 +91,7 @@ export default function ReceiptToExcelPage() {
             </button>
           )}
           {!(state as any).upgrade && (
-            <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={reset}>Try again</button>
+            <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={handleReset}>Try again</button>
           )}
         </div>
       )}

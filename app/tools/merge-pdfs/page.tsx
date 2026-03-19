@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import ToolPageLayout from '@/components/ToolPageLayout'
 import ToolDrop from '@/components/ToolDrop'
 import FileQueue from '@/components/FileQueue'
@@ -12,6 +12,18 @@ import type { FileItem } from '@/types'
 export default function MergePDFsPage() {
   const [files, setFiles] = useState<FileItem[]>([])
   const { state, processMultiple, reset } = useTool('/api/merge-pdfs')
+  const [showResult, setShowResult] = useState(false)
+
+  const isProcessing = state.status === 'uploading' || state.status === 'processing'
+  const isComplete = state.status === 'done'
+
+  useEffect(() => {
+    if (isComplete) {
+      const t = setTimeout(() => setShowResult(true), 350)
+      return () => clearTimeout(t)
+    }
+    setShowResult(false)
+  }, [isComplete])
 
   const handleFiles = useCallback((newFiles: File[]) => {
     setFiles(prev => [
@@ -28,6 +40,12 @@ export default function MergePDFsPage() {
     processMultiple(files.map(f => f.file))
   }
 
+  function handleReset() {
+    setShowResult(false)
+    reset()
+    setFiles([])
+  }
+
   return (
     <ToolPageLayout title="Merge PDFs" description="Combine multiple PDF files into a single document.">
       {state.status === 'idle' && (
@@ -41,11 +59,13 @@ export default function MergePDFsPage() {
           )}
         </>
       )}
-      {(state.status === 'uploading' || state.status === 'processing') && (
-        <ProgressBar progress={state.progress} label={state.message} />
-      )}
-      {state.status === 'done' && state.result && (
-        <ResultBox title="Merged" downloadUrl={state.result.url} downloadName={state.result.filename} onReset={() => { reset(); setFiles([]) }} />
+      <ProgressBar
+        active={isProcessing}
+        complete={isComplete}
+        stages={['Uploading file', 'Processing', 'Optimising', 'Almost done']}
+      />
+      {showResult && state.result && (
+        <ResultBox title="Merged" downloadUrl={state.result.url} downloadName={state.result.filename} onReset={handleReset} />
       )}
       {state.status === 'error' && (
         <div>
@@ -53,7 +73,7 @@ export default function MergePDFsPage() {
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             {state.error}
           </div>
-          <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={() => { reset(); setFiles([]) }}>Try again</button>
+          <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={handleReset}>Try again</button>
         </div>
       )}
     </ToolPageLayout>

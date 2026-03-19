@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ToolPageLayout from '@/components/ToolPageLayout'
 import ToolDrop from '@/components/ToolDrop'
 import ToolOptions, { OptionRow } from '@/components/ToolOptions'
@@ -11,6 +11,23 @@ import { useTool } from '@/lib/use-tool'
 export default function SplitPDFPage() {
   const [ranges, setRanges] = useState('1-3,5,7-9')
   const { state, process, reset } = useTool('/api/split-pdf')
+  const [showResult, setShowResult] = useState(false)
+
+  const isProcessing = state.status === 'uploading' || state.status === 'processing'
+  const isComplete = state.status === 'done'
+
+  useEffect(() => {
+    if (isComplete) {
+      const t = setTimeout(() => setShowResult(true), 350)
+      return () => clearTimeout(t)
+    }
+    setShowResult(false)
+  }, [isComplete])
+
+  function handleReset() {
+    setShowResult(false)
+    reset()
+  }
 
   return (
     <ToolPageLayout title="Split PDF" description="Extract specific pages or split by range into separate PDFs.">
@@ -24,14 +41,18 @@ export default function SplitPDFPage() {
           </ToolOptions>
         </>
       )}
-      {(state.status === 'uploading' || state.status === 'processing') && <ProgressBar progress={state.progress} label={state.message} />}
-      {state.status === 'done' && state.result && (
-        <ResultBox title="Split complete" downloadUrl={state.result.url} downloadName={state.result.filename || 'forma-split.zip'} onReset={reset} />
+      <ProgressBar
+        active={isProcessing}
+        complete={isComplete}
+        stages={['Uploading file', 'Processing', 'Optimising', 'Almost done']}
+      />
+      {showResult && state.result && (
+        <ResultBox title="Split complete" downloadUrl={state.result.url} downloadName={state.result.filename || 'forma-split.zip'} onReset={handleReset} />
       )}
       {state.status === 'error' && (
         <div>
           <div className="alert alert-error"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>{state.error}</div>
-          <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={reset}>Try again</button>
+          <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={handleReset}>Try again</button>
         </div>
       )}
     </ToolPageLayout>

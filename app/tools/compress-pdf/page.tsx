@@ -1,19 +1,44 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ToolPageLayout from '@/components/ToolPageLayout'
 import ToolDrop from '@/components/ToolDrop'
 import ToolOptions, { OptionRow } from '@/components/ToolOptions'
 import ProgressBar from '@/components/ProgressBar'
 import ResultBox from '@/components/ResultBox'
 import { useTool } from '@/lib/use-tool'
+import { takePendingFile } from '@/lib/pending-file'
 
 export default function CompressPDFPage() {
   const [level, setLevel] = useState('medium')
   const { state, process, reset } = useTool('/api/compress-pdf')
+  const [showResult, setShowResult] = useState(false)
+  const levelRef = useRef(level)
+  levelRef.current = level
+
+  const isProcessing = state.status === 'uploading' || state.status === 'processing'
+  const isComplete = state.status === 'done'
+
+  useEffect(() => {
+    const pending = takePendingFile()
+    if (pending) process(pending, { level: levelRef.current })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (isComplete) {
+      const t = setTimeout(() => setShowResult(true), 350)
+      return () => clearTimeout(t)
+    }
+    setShowResult(false)
+  }, [isComplete])
 
   function handleFiles(files: File[]) {
     process(files[0], { level })
+  }
+
+  function handleReset() {
+    setShowResult(false)
+    reset()
   }
 
   return (
@@ -32,17 +57,20 @@ export default function CompressPDFPage() {
           </ToolOptions>
         </>
       )}
-      {(state.status === 'uploading' || state.status === 'processing') && (
-        <ProgressBar progress={state.progress} label={state.message} />
-      )}
-      {state.status === 'done' && state.result && (
+      <ProgressBar
+        active={isProcessing}
+        complete={isComplete}
+        stages={['Uploading PDF', 'Compressing pages', 'Optimising images', 'Finalising']}
+      />
+      {showResult && state.result && (
         <ResultBox
           title="Compressed"
+          conversion={`${level.charAt(0).toUpperCase() + level.slice(1)} compression`}
           downloadUrl={state.result.url}
           downloadName={state.result.filename}
           originalSize={state.result.originalSize}
           outputSize={state.result.outputSize}
-          onReset={reset}
+          onReset={handleReset}
         />
       )}
       {state.status === 'error' && (
@@ -51,7 +79,7 @@ export default function CompressPDFPage() {
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             {state.error}
           </div>
-          <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={reset}>Try again</button>
+          <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={handleReset}>Try again</button>
         </div>
       )}
     </ToolPageLayout>

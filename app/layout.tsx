@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { Suspense } from 'react'
 import Nav from '@/components/Nav'
 import IntroAnimation from '@/components/IntroAnimation'
+import { PageTransition } from '@/components/PageTransition'
 import { PostHogProvider } from '@/components/PostHogProvider'
 import { PostHogPageView } from '@/components/PostHogPageView'
 import './globals.css'
@@ -44,7 +45,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Suspense>
           <IntroAnimation />
           <Nav />
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
         </PostHogProvider>
       </body>
     </html>

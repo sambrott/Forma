@@ -6,6 +6,7 @@ import TrustBar from '@/components/TrustBar'
 import ToolDrop from '@/components/ToolDrop'
 import ToolRow from '@/components/ToolRow'
 import { FEATURED_TOOLS } from '@/lib/tools'
+import { setPendingFile } from '@/lib/pending-file'
 import styles from './page.module.css'
 
 const EXT_MAP: Record<string, string> = {
@@ -25,7 +26,7 @@ export default function HomePage() {
     if (!file) return
     const ext = file.name.split('.').pop()?.toLowerCase() || ''
     const tool = EXT_MAP[ext] || 'compress-pdf'
-    sessionStorage.setItem('forma-pending-file', file.name)
+    setPendingFile(file)
     router.push(`/tools/${tool}`)
   }
 

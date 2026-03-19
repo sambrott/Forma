@@ -1,43 +1,23 @@
 'use client'
 
 import { Suspense } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import ToolCard from '@/components/ToolCard'
+import { ToolTabs } from '@/components/ToolTabs'
 import { TOOLS } from '@/lib/tools'
 import styles from './page.module.css'
 
-const FILTER_CATEGORIES = ['All', 'PDF', 'AI', 'Image', 'Audio', 'Video', 'Dev'] as const
-
 function ToolsContent() {
   const searchParams = useSearchParams()
-  const router = useRouter()
   const active = searchParams.get('cat') ?? 'All'
 
   const filtered = active === 'All'
     ? TOOLS
     : TOOLS.filter(t => t.cat === active)
 
-  function setCategory(cat: string) {
-    const params = new URLSearchParams(searchParams)
-    if (cat === 'All') params.delete('cat')
-    else params.set('cat', cat)
-    router.push(`/tools?${params.toString()}`, { scroll: false })
-  }
-
   return (
     <>
-      <div className={styles.tabBar}>
-        {FILTER_CATEGORIES.map(cat => (
-          <button
-            key={cat}
-            className={`${styles.tab} ${active === cat ? styles.tabActive : ''}`}
-            onClick={() => setCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
+      <ToolTabs />
       <div className={styles.grid}>
         {filtered.map(tool => (
           <ToolCard key={tool.slug} tool={tool} />

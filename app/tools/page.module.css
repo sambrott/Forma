@@ -24,39 +24,6 @@
   max-width: 520px;
 }
 
-/* Tab bar */
-.tabBar {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border-soft);
-  margin-bottom: 32px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.tabBar::-webkit-scrollbar { display: none; }
-
-.tab {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-muted);
-  padding: 11px 20px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  white-space: nowrap;
-  transition: color 180ms, border-color 180ms;
-}
-.tab:hover { color: var(--text); }
-
-.tabActive {
-  color: var(--text);
-  border-bottom-color: var(--accent);
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

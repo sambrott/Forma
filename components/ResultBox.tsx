@@ -5,6 +5,7 @@ import { formatFileSize } from '@/lib/limits'
 interface ResultBoxProps {
   title?: string
   subtitle?: string
+  conversion?: string      // e.g. "JPEG → PNG" or "High compression"
   downloadUrl?: string
   downloadName?: string
   originalSize?: number
@@ -15,6 +16,7 @@ interface ResultBoxProps {
 export default function ResultBox({
   title = 'Done',
   subtitle = 'Your file is ready to download',
+  conversion,
   downloadUrl,
   downloadName,
   originalSize,
@@ -28,6 +30,11 @@ export default function ResultBox({
   return (
     <div className="result-box">
       <div className="result-title">{title} ✓</div>
+      {conversion && (
+        <div className="result-conversion">
+          {conversion}
+        </div>
+      )}
       <div className="result-sub">{subtitle}</div>
       {(originalSize || outputSize) && (
         <div className="result-stats">
