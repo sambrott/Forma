@@ -1,0 +1,16 @@
+---
+description: Commit and push to origin after substantive code changes
+alwaysApply: true
+---
+
+# Git workflow
+
+After making substantive edits to this repo (code, styles, config that should ship):
+
+1. `git add` the changed files
+2. `git commit` with a clear message
+3. `git push origin main` (or the current branch)
+
+Do this **before** ending the turn when changes are complete. Do not wait for the user to ask to push.
+
+Skip only for: work-in-progress the user asked to hold, or when they explicitly say not to push yet.
