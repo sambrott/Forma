@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import pdf from 'pdf-parse'
-import { getAnthropicClient } from '@/lib/anthropic'
+import { getAnthropic } from '@/lib/anthropic'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { FREE_LIMITS } from '@/lib/limits'
 
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     const parsed = await pdf(buffer)
     const text = parsed.text.slice(0, 50000)
 
-    const client = getAnthropicClient()
+    const client = getAnthropic()
     const message = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2048,

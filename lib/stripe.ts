@@ -1,10 +1,12 @@
 import Stripe from 'stripe'
 
-let client: Stripe | null = null
+let _stripe: Stripe | null = null
 
-export function getStripeClient(): Stripe {
-  if (!client) {
-    client = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-02-24.acacia' })
+export function getStripe(): Stripe {
+  if (!_stripe) {
+    const key = process.env.STRIPE_SECRET_KEY
+    if (!key) throw new Error('STRIPE_SECRET_KEY is not set')
+    _stripe = new Stripe(key, { apiVersion: '2025-02-24.acacia' })
   }
-  return client
+  return _stripe
 }

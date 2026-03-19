@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { writeFile } from 'fs/promises'
 import { createReadStream } from 'fs'
-import OpenAI from 'openai'
+import { getOpenAI } from '@/lib/openai'
 import { deleteFile } from '@/lib/delete-file'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { FREE_LIMITS } from '@/lib/limits'
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     tmpPath = `/tmp/${Date.now()}-${file.name}`
     await writeFile(tmpPath, buffer)
 
-    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+    const openai = getOpenAI()
 
     const responseFormat = format === 'srt' ? 'srt' : format === 'vtt' ? 'vtt' : 'text'
 

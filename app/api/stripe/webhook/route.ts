@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getStripeClient } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 
 export const runtime = 'nodejs'
 
 export async function POST(req: NextRequest) {
-  const stripe = getStripeClient()
+  const stripe = getStripe()
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')
 

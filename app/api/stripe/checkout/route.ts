@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getStripeClient } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 
 export const runtime = 'nodejs'
 
 export async function GET(req: NextRequest) {
   try {
-    const stripe = getStripeClient()
+    const stripe = getStripe()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
 
     const session = await stripe.checkout.sessions.create({
