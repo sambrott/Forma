@@ -5,20 +5,18 @@
   padding: 32px;
 }
 
-/* Desktop: halftone box tight around headline copy — 10px margin on each side. */
+/* Desktop: same max measure as .heroSub (420px); 10px pad; halftone hugs copy */
 @media (min-width: 901px) {
   .wrap {
-    width: fit-content;
-    max-width: 100%;
+    width: 100%;
+    max-width: 420px;
     box-sizing: border-box;
-    /* 10px inset left/top/bottom; pull canvas in 40px extra from the right */
-    padding: 10px 50px 10px 10px;
+    padding: 10px;
     align-self: start;
   }
 
-  /* Block-level text was stretching to full grid column → box too wide on the right */
   .text {
-    width: max-content;
+    width: 100%;
     max-width: 100%;
   }
 }
