@@ -2,7 +2,7 @@ const CHECK = (
   <svg viewBox="0 0 8 8"><polyline points="1,4 3.5,6.5 7,1.5"/></svg>
 )
 
-const items = ['Files deleted immediately', 'Zero data collection', 'No account, ever']
+const items = ['Files deleted immediately', 'Zero data collection', 'No account required']
 
 export default function TrustBar() {
   return (

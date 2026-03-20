@@ -13,7 +13,7 @@
   font-size: var(--text-3xl);
   font-weight: 300;
   letter-spacing: var(--tracking-tight);
-  line-height: 1.1;
+  line-height: 1.06;
   color: var(--text);
   margin: var(--space-2) 0 var(--space-2);
 }
@@ -21,7 +21,7 @@
 .subtitle {
   font-size: var(--text-md);
   color: var(--text-sub);
-  line-height: var(--leading-normal);
+  line-height: 1.48;
   max-width: 520px;
 }
 
@@ -32,10 +32,19 @@
   min-height: 200px;
 }
 
+@media (max-width: 900px) {
+  .main {
+    padding-top: var(--page-main-pt-tablet);
+  }
+}
+
 @media (max-width: 860px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 480px) {
-  .main { padding: var(--space-8) 20px var(--space-16); }
+
+@media (max-width: 640px) {
+  .main {
+    padding: var(--page-main-pt-mobile) var(--page-main-px-mobile) var(--space-16);
+  }
   .grid { grid-template-columns: 1fr; }
 }

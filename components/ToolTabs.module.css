@@ -11,6 +11,7 @@
 }
 .tabBar::-webkit-scrollbar { display: none; }
 
+/* Match .pricing-card.featured: 1px accent border, radius-lg, no glow */
 .indicator {
   position: absolute;
   top: 50%;
@@ -20,7 +21,7 @@
   border-radius: var(--radius-lg);
   pointer-events: none;
   box-sizing: border-box;
-  box-shadow: 0 0 14px var(--accent-glow), 0 0 28px rgba(232, 98, 42, 0.18);
+  box-shadow: none;
 }
 
 .indicatorAnimate {
@@ -51,7 +52,6 @@
 .tabActive {
   color: var(--text);
   font-weight: 600;
-  text-shadow: 0 0 20px rgba(232, 98, 42, 0.2);
 }
 
 @media (max-width: 640px) {
@@ -60,7 +60,13 @@
   }
 
   .tab {
-    padding: 10px 14px;
-    font-size: 12px;
+    padding: 8px 11px;
+    font-size: 11px;
+  }
+
+  .indicator {
+    height: calc(100% - 10px);
+    border-radius: var(--radius-lg);
+    box-shadow: none;
   }
 }

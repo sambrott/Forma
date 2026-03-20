@@ -8,6 +8,10 @@
   padding-bottom: 0.08em;
   color: inherit;
   vertical-align: baseline;
+  /* Ensures blur filters composite the same on desktop as on mobile */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  isolation: isolate;
 }
 
 .phraseSizer {
@@ -29,6 +33,8 @@
   max-width: 100%;
   color: inherit;
   white-space: nowrap;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .phraseLayerStable {

@@ -60,11 +60,13 @@ export default function HomePage() {
         <div className={styles.heroDropDesktop}>
           <ToolDrop onFiles={handleFiles} />
           <div className={styles.toolsHeader}>
-            <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent)' }}>
-              Popular tools
-            </span>
+            <span className={styles.toolsHeaderLabel}>Popular tools</span>
             <a href="/tools" className="btn btn-ghost btn-sm">View all →</a>
           </div>
+        </div>
+        <div className={styles.toolsHeaderMobile}>
+          <span className={styles.toolsHeaderLabel}>Popular tools</span>
+          <a href="/tools" className="btn btn-ghost btn-sm">View all →</a>
         </div>
         <div className={styles.toolsList}>
           {FEATURED_TOOLS.map(tool => (

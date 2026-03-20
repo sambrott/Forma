@@ -14,7 +14,6 @@ export default function HeadlineAnimation() {
   const sizeRef = useRef({ w: 0, h: 0 })
   const timeStartRef = useRef(0)
   const [isTouch, setIsTouch] = useState(false)
-  const [headlinePaused, setHeadlinePaused] = useState(false)
 
   useEffect(() => {
     setIsTouch(window.matchMedia('(hover: none) and (pointer: coarse)').matches)
@@ -60,6 +59,14 @@ export default function HeadlineAnimation() {
         let px = gx + wave * 2.8 + Math.sin(gy * 0.11 - t * 1.4) * 1.6
         let py = gy + Math.cos(gx * 0.09 + t * 1.05) * 2.2 + wave * 2
 
+        /* Always-on subtle “shake” / drift */
+        const shakeX =
+          Math.sin(t * 6.8 + gx * 0.12) * 1.15 + Math.cos(t * 4.9 + gy * 0.17) * 0.85
+        const shakeY =
+          Math.cos(t * 5.5 + gx * 0.09) * 0.95 + Math.sin(t * 7.1 + gy * 0.11) * 0.75
+        px += shakeX
+        py += shakeY
+
         const dx = px - mx
         const dy = py - my
         const dist = Math.sqrt(dx * dx + dy * dy)
@@ -73,8 +80,9 @@ export default function HeadlineAnimation() {
         }
 
         const breathe = 0.5 + 0.5 * wave
-        const baseAlpha = 0.028 + 0.052 * breathe
-        const br = 0.85 + 0.45 * breathe
+        /* Idle: always visible gray dots; hover adds orange + size */
+        const baseAlpha = 0.04 + 0.06 * breathe
+        const br = 0.88 + 0.42 * breathe
 
         if (hb * ht > 0.02) {
           const orangeT = Math.pow(ht, 1.35) * hb
@@ -99,7 +107,6 @@ export default function HeadlineAnimation() {
     ctx.restore()
   }, [])
 
-  // Desktop: continuous halftone waves + cursor interaction
   useEffect(() => {
     if (isTouch) return
     timeStartRef.current = performance.now()
@@ -112,7 +119,6 @@ export default function HeadlineAnimation() {
     return () => cancelAnimationFrame(rafRef.current)
   }, [isTouch, drawDesktopHalftone])
 
-  // Mobile ambient wave (unchanged behaviour)
   useEffect(() => {
     if (!isTouch) return
     const canvas = canvasRef.current
@@ -170,7 +176,6 @@ export default function HeadlineAnimation() {
     return () => cancelAnimationFrame(raf)
   }, [isTouch])
 
-  // Resize + pointer (desktop)
   useEffect(() => {
     const canvas = canvasRef.current
     const wrap = wrapRef.current
@@ -221,19 +226,14 @@ export default function HeadlineAnimation() {
   }, [isTouch])
 
   return (
-    <div
-      ref={wrapRef}
-      className={styles.wrap}
-      onMouseEnter={() => setHeadlinePaused(true)}
-      onMouseLeave={() => setHeadlinePaused(false)}
-    >
+    <div ref={wrapRef} className={styles.wrap}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ pointerEvents: 'none' }} />
       <div className={styles.text}>
         <span>Work done.</span>
         <br />
         <em>Without</em>
         <br />
-        <CyclingPhrase paused={headlinePaused} />
+        <CyclingPhrase />
       </div>
     </div>
   )

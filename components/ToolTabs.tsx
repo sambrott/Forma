@@ -1,6 +1,6 @@
 'use client'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useEffect, useLayoutEffect, useState } from 'react'
 import styles from './ToolTabs.module.css'
 
 const CATEGORIES = ['All', 'PDF', 'AI', 'Image', 'Audio', 'Video', 'Dev']
@@ -12,51 +12,59 @@ export function ToolTabs() {
 
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
   const [indicator, setIndicator] = useState({ left: 0, width: 0 })
-  const [mounted, setMounted] = useState(false)
+  const [indicatorVisible, setIndicatorVisible] = useState(false)
   const [animate, setAnimate] = useState(false)
+  const hasPositionedOnce = useRef(false)
 
-  const updateIndicator = useCallback((index: number, shouldAnimate: boolean) => {
-    const el = tabRefs.current[index]
-    if (!el) return
-    const parent = el.parentElement
-    if (!parent) return
-    const parentRect = parent.getBoundingClientRect()
-    const elRect = el.getBoundingClientRect()
-    setAnimate(shouldAnimate)
-    setIndicator({
-      left: elRect.left - parentRect.left,
-      width: elRect.width,
-    })
-  }, [])
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const index = CATEGORIES.indexOf(active)
     if (index === -1) return
-    requestAnimationFrame(() => {
-      updateIndicator(index, false)
-      setMounted(true)
-    })
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    if (!mounted) return
-    const index = CATEGORIES.indexOf(active)
-    if (index === -1) return
-    updateIndicator(index, true)
-  }, [active, mounted, updateIndicator])
+    const shouldAnim = hasPositionedOnce.current
+    hasPositionedOnce.current = true
+
+    const apply = () => {
+      const el = tabRefs.current[index]
+      if (!el) return
+      const parent = el.parentElement
+      if (!parent) return
+      const parentRect = parent.getBoundingClientRect()
+      const elRect = el.getBoundingClientRect()
+      setAnimate(shouldAnim)
+      setIndicator({
+        left: elRect.left - parentRect.left,
+        width: elRect.width,
+      })
+      setIndicatorVisible(true)
+    }
+
+    apply()
+    const id = requestAnimationFrame(apply)
+    return () => cancelAnimationFrame(id)
+  }, [active])
 
   useEffect(() => {
     function handleResize() {
       const index = CATEGORIES.indexOf(active)
-      if (index !== -1) updateIndicator(index, false)
+      if (index === -1) return
+      const el = tabRefs.current[index]
+      if (!el) return
+      const parent = el.parentElement
+      if (!parent) return
+      setAnimate(false)
+      const parentRect = parent.getBoundingClientRect()
+      const elRect = el.getBoundingClientRect()
+      setIndicator({
+        left: elRect.left - parentRect.left,
+        width: elRect.width,
+      })
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [active, updateIndicator])
+  }, [active])
 
-  function handleTabClick(cat: string, index: number) {
-    updateIndicator(index, true)
-    const params = new URLSearchParams(searchParams)
+  function handleTabClick(cat: string) {
+    const params = new URLSearchParams(searchParams.toString())
     if (cat === 'All') params.delete('cat')
     else params.set('cat', cat)
     router.push(`/tools?${params.toString()}`, { scroll: false })
@@ -64,7 +72,7 @@ export function ToolTabs() {
 
   return (
     <div className={styles.tabBar}>
-      {mounted && (
+      {indicatorVisible && (
         <div
           className={`${styles.indicator} ${animate ? styles.indicatorAnimate : ''}`}
           style={{
@@ -76,9 +84,12 @@ export function ToolTabs() {
       {CATEGORIES.map((cat, i) => (
         <button
           key={cat}
-          ref={el => { tabRefs.current[i] = el }}
+          type="button"
+          ref={el => {
+            tabRefs.current[i] = el
+          }}
           className={`${styles.tab} ${active === cat ? styles.tabActive : ''}`}
-          onClick={() => handleTabClick(cat, i)}
+          onClick={() => handleTabClick(cat)}
         >
           {cat}
         </button>
