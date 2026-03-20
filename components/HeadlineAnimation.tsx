@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useEffect, useCallback, useState } from 'react'
+import { CyclingPhrase } from '@/components/CyclingPhrase'
 import styles from './HeadlineAnimation.module.css'
 
 export default function HeadlineAnimation() {
@@ -12,6 +13,7 @@ export default function HeadlineAnimation() {
   const opacityRef = useRef(0)
   const sizeRef = useRef({ w: 0, h: 0 })
   const [isTouch, setIsTouch] = useState(false)
+  const [headlinePaused, setHeadlinePaused] = useState(false)
 
   useEffect(() => {
     setIsTouch(window.matchMedia('(hover: none) and (pointer: coarse)').matches)
@@ -179,14 +181,19 @@ export default function HeadlineAnimation() {
   }, [isTouch, drawDesktop])
 
   return (
-    <div ref={wrapRef} className={styles.wrap}>
+    <div
+      ref={wrapRef}
+      className={styles.wrap}
+      onMouseEnter={() => setHeadlinePaused(true)}
+      onMouseLeave={() => setHeadlinePaused(false)}
+    >
       <canvas ref={canvasRef} className={styles.canvas} style={{ pointerEvents: 'none' }} />
       <div className={styles.text}>
         <span>Work done.</span>
         <br />
         <em>Without</em>
         <br />
-        <span>the noise.</span>
+        <CyclingPhrase paused={headlinePaused} />
       </div>
     </div>
   )

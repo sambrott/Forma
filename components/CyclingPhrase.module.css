@@ -1,0 +1,84 @@
+.phraseClip {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  min-height: 1.08em;
+  padding-bottom: 0.12em;
+  color: inherit;
+  vertical-align: baseline;
+}
+
+/* In-flow width/line box so absolute cross-fade layers don’t collapse layout */
+.phraseSizer {
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+  height: 0;
+  overflow: hidden;
+}
+
+.phraseLayer {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: max-content;
+  max-width: 100%;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.phraseLayerStable {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: max-content;
+  max-width: 100%;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.entering {
+  animation: phraseEnter 380ms cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.enteringDelayed {
+  animation: phraseEnter 380ms cubic-bezier(0, 0, 0.2, 1) 80ms forwards;
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.exiting {
+  animation: phraseExit 320ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.hiddenBeforeStart {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+@keyframes phraseEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes phraseExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}

@@ -17,7 +17,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
         {tool.isAI ? (
           <span className="badge badge-ai" style={{ fontSize: 8 }}>✦ AI</span>
         ) : (
-          <span style={{ fontSize: 12, color: 'var(--border)' }}>↗</span>
+          <span className="tool-card-arrow">↗</span>
         )}
       </div>
       <div className="tool-card-name">{tool.name}</div>
