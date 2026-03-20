@@ -128,8 +128,8 @@
       var(--home-tool-row-h) + var(--home-tool-gap) + var(--home-tool-row-h) * 2 / 3
     );
     --tools-list-h: calc(6 * var(--home-tool-row-h) + 5 * var(--home-tool-gap));
-    /* Extra pull-up (web only): 56px vs merge-line baseline (+12px vs prior) */
-    margin-top: calc(var(--merge-lower-third-y) - var(--tools-list-h) - 56px);
+    /* Extra pull-up (web only): 68px vs merge-line baseline (+12px) */
+    margin-top: calc(var(--merge-lower-third-y) - var(--tools-list-h) - 68px);
   }
 
   .heroTrust :global(.trust-bar) {
