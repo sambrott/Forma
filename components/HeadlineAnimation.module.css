@@ -11,8 +11,8 @@
     width: 100%;
     max-width: 420px;
     box-sizing: border-box;
-    /* Top/left anchor unchanged; inset canvas more from right (+20) and bottom (+15) */
-    padding: 10px 30px 25px 10px;
+    /* Top/left anchor unchanged; right inset +20; bottom pad 10px (−15px vs prior for shorter box) */
+    padding: 10px 30px 10px 10px;
     align-self: start;
   }
 
