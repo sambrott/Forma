@@ -11,7 +11,8 @@
     width: fit-content;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 10px;
+    /* 10px inset left/top/bottom; pull canvas in 40px extra from the right */
+    padding: 10px 50px 10px 10px;
     align-self: start;
   }
 

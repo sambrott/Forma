@@ -86,12 +86,16 @@ export default function HeadlineAnimation() {
         const br = 0.95 + 0.5 * breathe
 
         if (hb * ht > 0.02) {
-          const orangeT = Math.pow(ht, 1.35) * hb
+          /* Light mode: hover should read mostly orange (not gray); dark keeps current balance */
+          let orangeT = Math.pow(ht, dark ? 1.35 : 1.05) * hb
+          if (!dark) {
+            orangeT = Math.min(1, orangeT * 1.65 + hb * ht * 0.4)
+          }
           const rr = Math.round(232 * orangeT + baseRgb[0] * (1 - orangeT))
           const gg = Math.round(98 * orangeT + baseRgb[1] * (1 - orangeT))
           const bb = Math.round(42 * orangeT + baseRgb[2] * (1 - orangeT))
-          const ar = br + orangeT * 3.2
-          const alpha = Math.min(0.55, baseAlpha + orangeT * 0.42)
+          const ar = br + orangeT * (dark ? 3.2 : 4.2)
+          const alpha = Math.min(dark ? 0.55 : 0.64, baseAlpha + orangeT * (dark ? 0.42 : 0.58))
           ctx.beginPath()
           ctx.arc(px, py, ar, 0, Math.PI * 2)
           ctx.fillStyle = `rgba(${rr},${gg},${bb},${alpha})`

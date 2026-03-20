@@ -7,13 +7,22 @@ import { ToolTabs } from '@/components/ToolTabs'
 import { TOOLS } from '@/lib/tools'
 import styles from './page.module.css'
 
+function normalizeToolCat(cat: string | null) {
+  if (!cat || cat === 'All') return 'All'
+  if (cat === 'Audio' || cat === 'Video') return 'Media'
+  return cat
+}
+
 function ToolsContent() {
   const searchParams = useSearchParams()
-  const active = searchParams.get('cat') ?? 'All'
+  const active = normalizeToolCat(searchParams.get('cat'))
 
-  const filtered = active === 'All'
-    ? TOOLS
-    : TOOLS.filter(t => t.cat === active)
+  const filtered =
+    active === 'All'
+      ? TOOLS
+      : active === 'Media'
+        ? TOOLS.filter(t => t.cat === 'Audio' || t.cat === 'Video')
+        : TOOLS.filter(t => t.cat === active)
 
   return (
     <>

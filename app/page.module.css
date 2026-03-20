@@ -128,8 +128,8 @@
       var(--home-tool-row-h) + var(--home-tool-gap) + var(--home-tool-row-h) * 2 / 3
     );
     --tools-list-h: calc(6 * var(--home-tool-row-h) + 5 * var(--home-tool-gap));
-    /* Extra ~12px up (web only — mobile uses its own .heroTrust rules below) */
-    margin-top: calc(var(--merge-lower-third-y) - var(--tools-list-h) - 12px);
+    /* Extra pull-up (web only): 24px total vs merge-line baseline */
+    margin-top: calc(var(--merge-lower-third-y) - var(--tools-list-h) - 24px);
   }
 
   .heroTrust :global(.trust-bar) {

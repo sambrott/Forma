@@ -54,6 +54,13 @@
   font-weight: 600;
 }
 
+@media (min-width: 901px) {
+  .tab {
+    font-size: calc(13px * 1.1);
+    padding: calc(11px * 1.1) calc(20px * 1.1);
+  }
+}
+
 @media (max-width: 640px) {
   .tabBar {
     margin-bottom: 24px;

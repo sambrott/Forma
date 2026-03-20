@@ -47,6 +47,16 @@
   }
 }
 
+@media (min-width: 901px) {
+  .logo {
+    font-size: calc(30px * 1.1);
+  }
+
+  .links a {
+    font-size: calc(13px * 1.1);
+  }
+}
+
 .logo em {
   font-style: italic;
   color: var(--accent);

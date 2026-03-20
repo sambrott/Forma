@@ -25,10 +25,21 @@ export function getToolBySlug(slug: string): Tool | undefined {
 }
 
 export function getToolsByCategory(cat: string): Tool[] {
+  if (cat === 'Media') return TOOLS.filter(t => t.cat === 'Audio' || t.cat === 'Video')
   return TOOLS.filter(t => t.cat === cat)
 }
 
+/** Tool card badge categories (per-tool); tabs use TOOL_TAB_ITEMS + “All”. */
 export const CATEGORIES = ['PDF', 'AI', 'Image', 'Audio', 'Video', 'Dev'] as const
+
+/** Tools page tabs (URL ?cat= matches id). Audio + Video share the “Media” tab. */
+export const TOOL_TAB_ITEMS = [
+  { id: 'PDF', label: 'PDF' },
+  { id: 'AI', label: 'AI' },
+  { id: 'Image', label: 'Image' },
+  { id: 'Media', label: 'Audio & Video' },
+  { id: 'Dev', label: 'Dev' },
+] as const
 
 export function getBadgeClass(cat: string): string {
   const map: Record<string, string> = {

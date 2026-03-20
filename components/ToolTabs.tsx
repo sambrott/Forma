@@ -1,14 +1,18 @@
 'use client'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useRef, useEffect, useLayoutEffect, useState } from 'react'
+import { TOOL_TAB_ITEMS } from '@/lib/tools'
 import styles from './ToolTabs.module.css'
 
-const CATEGORIES = ['All', 'PDF', 'AI', 'Image', 'Audio', 'Video', 'Dev']
+const ALL_TAB = { id: 'All', label: 'All' } as const
+const TABS = [ALL_TAB, ...TOOL_TAB_ITEMS]
 
 export function ToolTabs() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const active = searchParams.get('cat') ?? 'All'
+  const raw = searchParams.get('cat') ?? 'All'
+  const active =
+    raw === 'Audio' || raw === 'Video' ? 'Media' : raw
 
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
   const [indicator, setIndicator] = useState({ left: 0, width: 0 })
@@ -17,7 +21,7 @@ export function ToolTabs() {
   const hasPositionedOnce = useRef(false)
 
   useLayoutEffect(() => {
-    const index = CATEGORIES.indexOf(active)
+    const index = TABS.findIndex(t => t.id === active)
     if (index === -1) return
 
     const shouldAnim = hasPositionedOnce.current
@@ -45,7 +49,7 @@ export function ToolTabs() {
 
   useEffect(() => {
     function handleResize() {
-      const index = CATEGORIES.indexOf(active)
+      const index = TABS.findIndex(t => t.id === active)
       if (index === -1) return
       const el = tabRefs.current[index]
       if (!el) return
@@ -63,10 +67,10 @@ export function ToolTabs() {
     return () => window.removeEventListener('resize', handleResize)
   }, [active])
 
-  function handleTabClick(cat: string) {
+  function handleTabClick(id: string) {
     const params = new URLSearchParams(searchParams.toString())
-    if (cat === 'All') params.delete('cat')
-    else params.set('cat', cat)
+    if (id === 'All') params.delete('cat')
+    else params.set('cat', id)
     router.push(`/tools?${params.toString()}`, { scroll: false })
   }
 
@@ -81,17 +85,17 @@ export function ToolTabs() {
           }}
         />
       )}
-      {CATEGORIES.map((cat, i) => (
+      {TABS.map((tab, i) => (
         <button
-          key={cat}
+          key={tab.id}
           type="button"
           ref={el => {
             tabRefs.current[i] = el
           }}
-          className={`${styles.tab} ${active === cat ? styles.tabActive : ''}`}
-          onClick={() => handleTabClick(cat)}
+          className={`${styles.tab} ${active === tab.id ? styles.tabActive : ''}`}
+          onClick={() => handleTabClick(tab.id)}
         >
-          {cat}
+          {tab.label}
         </button>
       ))}
     </div>
