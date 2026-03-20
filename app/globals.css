@@ -13,7 +13,7 @@
   --accent-border:   rgba(232, 98, 42, 0.22);
   --accent-glow:     rgba(232, 98, 42, 0.35);
 
-  --bg:              #F0EBE3;
+  --bg:              #F7F4EF;
   --bg-warm:         #EDE7DF;
   --bg-2:            #E8E2D9;
   --bg-3:            #DFD9CF;
@@ -199,6 +199,7 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   min-height: 100%;
+  padding-top: var(--nav-height);
   transition: background var(--duration-slow) var(--ease),
               color var(--duration-slow) var(--ease);
 }
