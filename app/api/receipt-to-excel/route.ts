@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
 
     const headerRow = sheet.getRow(1)
     headerRow.font = { bold: true }
-    headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF0EBE3' } }
+    headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF7F4EF' } }
 
     const items = data.items?.length ? data.items : [{ description: 'Total', quantity: null, amount: data.total ?? 0 }]
     items.forEach((item, i) => {
