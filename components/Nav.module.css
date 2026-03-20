@@ -291,12 +291,12 @@
     display: none !important;
   }
 
-  /* Logged out: Go Pro → theme (old Sign-in slot) → menu */
-  .rightLoggedOutMobile .goProBtn {
+  /* Logged out: theme → Go Pro → menu (clear tap targets, readable order) */
+  .rightLoggedOutMobile .themeSlot {
     order: 1;
   }
 
-  .rightLoggedOutMobile .themeSlot {
+  .rightLoggedOutMobile .goProBtn {
     order: 2;
   }
 
@@ -304,7 +304,29 @@
     order: 3;
   }
 
+  /* Logged in: avatar → Go Pro → theme → menu */
+  .rightLoggedInMobile .userMenu {
+    order: 1;
+  }
+
+  .rightLoggedInMobile .goProBtn {
+    order: 2;
+  }
+
+  .rightLoggedInMobile .themeSlot {
+    order: 3;
+  }
+
+  .rightLoggedInMobile .menuBtn {
+    order: 4;
+  }
+
   .right {
-    gap: 8px;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .inner {
+    gap: 12px;
   }
 }

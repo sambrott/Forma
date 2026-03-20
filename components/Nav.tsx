@@ -96,7 +96,9 @@ export default function Nav() {
           ))}
         </ul>
 
-        <div className={`${styles.right} ${!user ? styles.rightLoggedOutMobile : ''}`}>
+        <div
+          className={`${styles.right} ${!user ? styles.rightLoggedOutMobile : styles.rightLoggedInMobile}`}
+        >
           <span className={styles.themeSlot}>
             <ThemeToggle />
           </span>
