@@ -24,12 +24,28 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     siteName: 'Forma',
+    /* Primary = dark OG (default for previews); light = alternate for platforms that use second image */
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Forma — Work done. Without the noise.',
+      },
+      {
+        url: '/og-image-light.png',
+        width: 1200,
+        height: 630,
+        alt: 'Forma — Work done. Without the noise. (light)',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Forma | Free Professional File & Document Tools',
     description:
       'Compress PDFs, convert images, extract audio, summarize documents: all free, private, and instant.',
+    images: ['/opengraph-image.png'],
   },
   icons: {
     icon: '/icon.png',

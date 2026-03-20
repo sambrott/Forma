@@ -10,6 +10,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  /* Compositor layer — helps WebKit apply backdrop-filter consistently (same idea as mobile menu) */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .nav::after {
@@ -327,8 +331,10 @@
     padding: 6px 0;
     border-radius: var(--radius-md);
     z-index: var(--z-dropdown);
-    overflow: hidden;
-    /* Match top nav bar glass (same blur / saturation / opacity per theme) */
+    /* overflow:hidden breaks backdrop-filter blur on iOS Safari */
+    overflow: visible;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 
   :global([data-theme='light']) .mobileMenu {
