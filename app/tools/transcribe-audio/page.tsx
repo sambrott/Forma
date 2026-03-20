@@ -42,7 +42,7 @@ export default function TranscribeAudioPage() {
     <ToolPageLayout title="Transcribe Audio" description="Accurate transcript from audio or video using AI.">
       {state.status === 'idle' && (
         <>
-          <ToolDrop accept=".mp3,.wav,.m4a,.mp4,.webm" onFiles={files => process(files[0], { format: outputFormat })} label="Drop your audio or video" hint="MP3 · WAV · M4A · MP4 · WebM — 3 free AI uses per day" />
+          <ToolDrop accept=".mp3,.wav,.m4a,.mp4,.webm" onFiles={files => process(files[0], { format: outputFormat })} label="Drop your audio or video" hint="MP3 · WAV · M4A · MP4 · WebM · 3 free AI uses per day" />
           <ToolOptions>
             <OptionRow label="Output format">
               <select className="select" style={{ width: 'auto' }} value={outputFormat} onChange={e => setOutputFormat(e.target.value)}>

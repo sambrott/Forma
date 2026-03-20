@@ -16,7 +16,9 @@ export default function Nav() {
   const router = useRouter()
   const [user, setUser] = useState<UserInfo | null>(null)
   const [dropOpen, setDropOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const dropRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLNavElement>(null)
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return
@@ -43,10 +45,17 @@ export default function Nav() {
       if (dropRef.current && !dropRef.current.contains(e.target as Node)) {
         setDropOpen(false)
       }
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
     }
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
   async function handleSignOut() {
     setDropOpen(false)
@@ -66,11 +75,26 @@ export default function Nav() {
   ]
 
   return (
-    <nav className={styles.nav}>
+    <nav ref={navRef} className={styles.nav}>
       <div className={styles.inner}>
-        <Link href="/" className={styles.logo}>
-          forma<em>.</em>
-        </Link>
+        <div className={styles.left}>
+          <Link href="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
+            forma<em>.</em>
+          </Link>
+          <button
+            type="button"
+            className={styles.menuBtn}
+            aria-expanded={menuOpen}
+            aria-controls="nav-mobile-menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMenuOpen(o => !o)}
+          >
+            <span className={styles.menuBar} data-open={menuOpen} />
+            <span className={styles.menuBar} data-open={menuOpen} />
+            <span className={styles.menuBar} data-open={menuOpen} />
+          </button>
+        </div>
+
         <ul className={styles.links}>
           {links.map(l => (
             <li key={l.href}>
@@ -83,6 +107,7 @@ export default function Nav() {
             </li>
           ))}
         </ul>
+
         <div className={styles.right}>
           <ThemeToggle />
           {user ? (
@@ -114,6 +139,21 @@ export default function Nav() {
             Go Pro
           </Link>
         </div>
+
+        {menuOpen && (
+          <div id="nav-mobile-menu" className={styles.mobileMenu}>
+            {links.map(l => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`${styles.mobileLink} ${pathname === l.href ? styles.mobileLinkActive : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </nav>
   )

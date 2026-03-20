@@ -18,10 +18,10 @@ export default function JSONFormatterPage() {
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
   const [error, setError] = useState('')
-  const [stats, setStats] = useState({ lines: '—', keys: '—', size: '—' })
+  const [stats, setStats] = useState({ lines: '-', keys: '-', size: '-' })
 
   const format = useCallback(() => {
-    if (!input.trim()) { setOutput(''); setError(''); setStats({ lines: '—', keys: '—', size: '—' }); return }
+    if (!input.trim()) { setOutput(''); setError(''); setStats({ lines: '-', keys: '-', size: '-' }); return }
     try {
       const parsed = JSON.parse(input)
       const formatted = JSON.stringify(parsed, null, 2)
@@ -48,7 +48,7 @@ export default function JSONFormatterPage() {
   }, [output])
 
   return (
-    <ToolPageLayout title="JSON Formatter" description="Format, validate, and minify JSON — runs entirely in your browser.">
+    <ToolPageLayout title="JSON Formatter" description="Format, validate, and minify JSON. Runs entirely in your browser.">
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
         <div>
           <div className="input-label">Input</div>

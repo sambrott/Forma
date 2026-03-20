@@ -49,9 +49,9 @@ export default function CompressPDFPage() {
           <ToolOptions>
             <OptionRow label="Compression level" hint="Higher = smaller file, slightly lower quality">
               <select className="select" style={{ width: 'auto' }} value={level} onChange={e => setLevel(e.target.value)}>
-                <option value="low">Low — minimal</option>
-                <option value="medium">Medium — recommended</option>
-                <option value="high">High — maximum</option>
+                <option value="low">Low (minimal)</option>
+                <option value="medium">Medium (recommended)</option>
+                <option value="high">High (maximum)</option>
               </select>
             </OptionRow>
           </ToolOptions>

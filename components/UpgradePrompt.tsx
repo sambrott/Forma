@@ -30,7 +30,7 @@ export default function UpgradePrompt({ open, onClose, reason }: UpgradePromptPr
             ))}
           </ul>
           <Link href="/pricing" className="btn btn-primary btn-full" onClick={onClose}>
-            View Pro plans — $9/mo
+            View Pro plans ($9/mo)
           </Link>
           <button
             className="btn btn-ghost btn-full"

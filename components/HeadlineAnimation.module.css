@@ -2,13 +2,13 @@
   position: relative;
   cursor: default;
   user-select: none;
-  /* Desktop: matches previous inline padding — canvas + halftone sit in same frame as before */
+  /* Desktop: matches previous inline padding; canvas + halftone sit in same frame as before */
   padding: 32px;
 }
 
 @media (max-width: 900px) {
   .wrap {
-    /* Mobile: no extra inset — animation lines up with hero text in single-column layout */
+    /* Mobile: no extra inset; animation lines up with hero text in single-column layout */
     padding: 0;
     width: 100%;
     max-width: 100%;

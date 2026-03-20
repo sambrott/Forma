@@ -30,7 +30,7 @@ export default function RemoveBackgroundPage() {
   return (
     <ToolPageLayout title="Remove Background" description="AI background removal in one click. Get a transparent PNG.">
       {state.status === 'idle' && (
-        <ToolDrop accept=".jpg,.jpeg,.png,.webp" onFiles={files => process(files[0])} label="Drop your image here" hint="JPG · PNG · WebP — 3 free AI uses per day" />
+        <ToolDrop accept=".jpg,.jpeg,.png,.webp" onFiles={files => process(files[0])} label="Drop your image here" hint="JPG · PNG · WebP · 3 free AI uses per day" />
       )}
       <ProgressBar
         active={isProcessing}

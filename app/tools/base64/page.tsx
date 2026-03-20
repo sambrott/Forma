@@ -20,7 +20,7 @@ export default function Base64Page() {
   const copy = useCallback(() => { navigator.clipboard.writeText(output) }, [output])
 
   return (
-    <ToolPageLayout title="Base64" description="Encode and decode Base64 strings — runs entirely in your browser.">
+    <ToolPageLayout title="Base64" description="Encode and decode Base64 strings. Runs entirely in your browser.">
       <div className="input-label">Input</div>
       <textarea
         className="code-area"

@@ -47,7 +47,7 @@ export default function ToolDrop({ accept, multiple, label, hint, onFiles }: Too
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
       </div>
       <div className="upload-title">{label || 'Drop your file to begin'}</div>
-      <div className="upload-sub">{hint || 'PDF · DOCX · JPG · PNG · MP4 · MP3 — up to 100 MB free · No sign-up'}</div>
+      <div className="upload-sub">{hint || 'PDF · DOCX · JPG · PNG · MP4 · MP3 · up to 100 MB free · No sign-up'}</div>
       <div className="upload-actions" onClick={e => e.stopPropagation()}>
         <button className="btn btn-primary" onClick={() => inputRef.current?.click()}>Select file</button>
       </div>

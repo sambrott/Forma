@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'About & Privacy — Forma',
+  title: 'About & Privacy | Forma',
   description: 'Forma is a free file tool suite. We delete files immediately, collect zero personal data, and never require an account.',
 }
 
@@ -20,7 +20,7 @@ export default function AboutPage() {
       <div className={styles.body}>
         <p>
           Forma is a free suite of professional file and document tools. Compress PDFs,
-          convert images, extract audio, transcribe recordings, and more — without creating
+          convert images, extract audio, transcribe recordings, and more, without creating
           an account, handing over personal data, or watching ads take over your screen.
         </p>
 
@@ -39,7 +39,7 @@ export default function AboutPage() {
           </div>
           <div className="info-card">
             <div className="info-card-label">Analytics</div>
-            <p>We use Plausible Analytics — privacy-first, no cookies, no cross-site tracking. We see page views and tool usage counts only.</p>
+            <p>We use Plausible Analytics (privacy-first, no cookies, no cross-site tracking). We see page views and tool usage counts only.</p>
           </div>
           <div className="info-card">
             <div className="info-card-label">AI tools</div>

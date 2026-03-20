@@ -20,11 +20,21 @@
 .desc {
   font-size: var(--text-md);
   color: var(--text-sub);
-  line-height: var(--leading-relaxed);
+  line-height: var(--leading-snug);
+}
+
+/* Consistent vertical rhythm between upload, options, results, privacy (matches mobile summarise flow) */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
 }
 
 @media (max-width: 640px) {
   .main { padding: 28px 20px 60px; }
   .title { font-size: 28px; }
   .desc { font-size: 14px; }
+  .stack {
+    gap: var(--mobile-stack-gap, 24px);
+  }
 }

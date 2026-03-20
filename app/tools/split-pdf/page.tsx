@@ -35,7 +35,7 @@ export default function SplitPDFPage() {
         <>
           <ToolDrop accept=".pdf" onFiles={files => process(files[0], { ranges })} label="Drop your PDF here" hint="PDF up to 100 MB free" />
           <ToolOptions>
-            <OptionRow label="Page ranges" hint="e.g. 1-3,5,7-9 — or leave blank to split every page">
+            <OptionRow label="Page ranges" hint="e.g. 1-3,5,7-9, or leave blank to split every page">
               <input className="input" style={{ width: 200 }} value={ranges} onChange={e => setRanges(e.target.value)} placeholder="1-3,5,7-9" />
             </OptionRow>
           </ToolOptions>

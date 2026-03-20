@@ -37,7 +37,7 @@ export default function ToolsPage() {
         </div>
         <h1 className={styles.title}>Every tool, one place</h1>
         <p className={styles.subtitle}>
-          File conversion, compression, AI extraction, and developer utilities — all free and private.
+          File conversion, compression, AI extraction, and developer utilities: all free and private.
         </p>
       </div>
 

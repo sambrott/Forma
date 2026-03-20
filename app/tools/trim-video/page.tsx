@@ -34,7 +34,7 @@ export default function TrimVideoPage() {
     <ToolPageLayout title="Trim Video" description="Cut a video to exact start and end times.">
       {state.status === 'idle' && (
         <>
-          <ToolDrop accept=".mp4,.mov,.avi,.mkv,.webm" onFiles={files => process(files[0], { start, end })} label="Drop your video here" hint="MP4 · MOV · AVI · MKV · WebM — up to 100 MB" />
+          <ToolDrop accept=".mp4,.mov,.avi,.mkv,.webm" onFiles={files => process(files[0], { start, end })} label="Drop your video here" hint="MP4 · MOV · AVI · MKV · WebM · up to 100 MB" />
           <ToolOptions>
             <OptionRow label="Start time (seconds)">
               <input className="input" style={{ width: 100 }} type="number" min={0} value={start} onChange={e => setStart(e.target.value)} />

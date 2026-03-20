@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Pricing — Forma Pro | Unlimited AI Tools',
+  title: 'Pricing | Forma Pro | Unlimited AI Tools',
   description: 'Forma is free forever. Go Pro for unlimited AI uses, 2 GB uploads, and batch processing. $9/month or $79/year.',
 }
 

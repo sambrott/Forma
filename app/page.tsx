@@ -42,13 +42,16 @@ export default function HomePage() {
           Image, document, and media tools built for people who know what they need.
           Files deleted the moment you&apos;re done.
         </p>
-        <div className={styles.homeDrop}>
+        <div className={`${styles.homeDrop} ${styles.homeDropMobile}`}>
           <ToolDrop onFiles={handleFiles} />
         </div>
         <TrustBar />
       </div>
 
       <div className={styles.heroRight}>
+        <div className={`${styles.homeDrop} ${styles.homeDropDesktop}`}>
+          <ToolDrop onFiles={handleFiles} />
+        </div>
         <div className={styles.toolsPanel}>
           <div className={styles.toolsHeader}>
             <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent)' }}>

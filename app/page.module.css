@@ -27,6 +27,32 @@
   max-width: 520px;
 }
 
+/* Desktop: drop zone in right column (previous layout). Mobile: only left column drop. */
+.homeDropMobile {
+  display: none;
+}
+.homeDropDesktop {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .homeDropMobile {
+    display: block;
+  }
+  .homeDropDesktop {
+    display: none;
+  }
+  .main {
+    gap: var(--mobile-stack-gap, 24px);
+  }
+  .heroLeft {
+    gap: var(--mobile-stack-gap, 24px);
+  }
+  .heroRight {
+    gap: var(--mobile-stack-gap, 24px);
+  }
+}
+
 .heroRight {
   display: flex;
   flex-direction: column;

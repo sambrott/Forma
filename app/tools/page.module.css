@@ -20,7 +20,7 @@
 .subtitle {
   font-size: var(--text-md);
   color: var(--text-sub);
-  line-height: var(--leading-relaxed);
+  line-height: var(--leading-snug);
   max-width: 520px;
 }
 

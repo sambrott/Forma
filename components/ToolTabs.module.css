@@ -51,3 +51,38 @@
   color: var(--text);
   font-weight: 600;
 }
+
+/* Narrow screens: 3 columns so every category fits without horizontal scroll */
+@media (max-width: 640px) {
+  .tabBar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    border-bottom: none;
+    margin-bottom: 24px;
+    overflow: visible;
+  }
+
+  .indicator {
+    display: none;
+  }
+
+  .tab {
+    padding: 10px 6px;
+    font-size: 12px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    text-align: center;
+    justify-content: center;
+  }
+
+  .tab:hover {
+    border-color: var(--border);
+  }
+
+  .tabActive {
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+  }
+}

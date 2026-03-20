@@ -44,7 +44,7 @@ export default function ExtractAudioPage() {
     <ToolPageLayout title="Extract Audio" description="Pull the audio track from any video file as MP3, WAV, or AAC.">
       {state.status === 'idle' && (
         <>
-          <ToolDrop accept=".mp4,.mov,.avi,.mkv,.webm" onFiles={files => process(files[0], { format, bitrate })} label="Drop your video here" hint="MP4 · MOV · AVI · MKV · WebM — up to 100 MB" />
+          <ToolDrop accept=".mp4,.mov,.avi,.mkv,.webm" onFiles={files => process(files[0], { format, bitrate })} label="Drop your video here" hint="MP4 · MOV · AVI · MKV · WebM · up to 100 MB" />
           <ToolOptions>
             <OptionRow label="Audio format">
               <select className="select" style={{ width: 'auto' }} value={format} onChange={e => setFormat(e.target.value)}>

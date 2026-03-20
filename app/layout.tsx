@@ -11,11 +11,11 @@ import { PostHogPageView } from '@/components/PostHogPageView'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Forma — Free Professional File & Document Tools',
-  description: 'Compress PDFs, convert images, extract audio, summarise documents — all free, private, and instant. Files deleted immediately.',
+  title: 'Forma | Free Professional File & Document Tools',
+  description: 'Compress PDFs, convert images, extract audio, summarise documents: all free, private, and instant. Files deleted immediately.',
   openGraph: {
-    title: 'Forma — Free Professional File & Document Tools',
-    description: 'Compress PDFs, convert images, extract audio, summarise documents — all free, private, and instant.',
+    title: 'Forma | Free Professional File & Document Tools',
+    description: 'Compress PDFs, convert images, extract audio, summarise documents: all free, private, and instant.',
     type: 'website',
   },
 }

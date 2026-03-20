@@ -16,8 +16,8 @@ export default function ToolPageLayout({ title, description, children }: ToolPag
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.desc}>{description}</p>
       </div>
-      {children}
-      <div style={{ marginTop: 'var(--space-8)' }}>
+      <div className={styles.stack}>
+        {children}
         <PrivacyNote />
       </div>
       <div id="ad-slot-tool" />

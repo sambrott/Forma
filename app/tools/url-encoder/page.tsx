@@ -15,7 +15,7 @@ export default function URLEncoderPage() {
   const copy = useCallback(() => { navigator.clipboard.writeText(output) }, [output])
 
   return (
-    <ToolPageLayout title="URL Encoder" description="Encode and decode URL strings — runs entirely in your browser.">
+    <ToolPageLayout title="URL Encoder" description="Encode and decode URL strings. Runs entirely in your browser.">
       <div className="input-label">Input URL or string</div>
       <input
         className="input"

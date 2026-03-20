@@ -58,8 +58,8 @@ export default function ReceiptToExcelPage() {
           <ToolOptions>
             <OptionRow label="Detail level" hint="Summary creates one row per receipt; Detailed creates one row per line item">
               <select className="select" style={{ width: 'auto' }} value={detail} onChange={e => setDetail(e.target.value)}>
-                <option value="summary">Summary — one row per receipt</option>
-                <option value="detailed">Detailed — one row per line item</option>
+                <option value="summary">Summary (one row per receipt)</option>
+                <option value="detailed">Detailed (one row per line item)</option>
               </select>
             </OptionRow>
           </ToolOptions>

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   FORMA — DESIGN TOKENS
+   FORMA · DESIGN TOKENS
    Single source of truth. Import this file first in every
    component. Never hardcode values that exist here.
    ═══════════════════════════════════════════════════════════ */
@@ -132,6 +132,9 @@
   --z-nav:      200;
   --z-modal:    300;
   --z-toast:    400;
+
+  /* Tool pages / stacked panels on small screens */
+  --mobile-stack-gap: 24px;
 }
 
 [data-theme="dark"] {
@@ -366,13 +369,12 @@ a { color: inherit; text-decoration: none; }
 
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius-md);background:var(--text);color:var(--bg);font-size:13px;box-shadow:var(--shadow-lg);z-index:var(--z-toast);pointer-events:none;transition:opacity 0.3s}
 
-/* Theme toggle */
-.theme-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:7px 14px;font-size:13px;color:var(--text-sub);transition:border-color var(--duration-base);flex-shrink:0}
-.theme-toggle:hover{border-color:var(--accent);color:var(--text)}
-.toggle-track{width:28px;height:16px;border-radius:8px;background:var(--border);position:relative;transition:background var(--duration-base);flex-shrink:0}
-.toggle-track.on{background:var(--accent)}
-.toggle-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform var(--duration-base) var(--ease)}
-.toggle-track.on .toggle-thumb{transform:translateX(12px)}
+/* Theme: segmented light / dark with sun & moon icons */
+.theme-segment{display:inline-flex;align-items:stretch;border:1px solid var(--border-soft);border-radius:999px;overflow:hidden;background:var(--surface);flex-shrink:0}
+.theme-seg{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:32px;padding:0 10px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;transition:background var(--duration-fast),color var(--duration-fast)}
+.theme-seg:hover{color:var(--text)}
+.theme-seg-active{background:var(--accent-dim);color:var(--accent)}
+.theme-seg-active:hover{color:var(--accent)}
 
 /* Upload actions mobile */
 @media (max-width: 400px) {
