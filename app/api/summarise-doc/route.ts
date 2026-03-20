@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       max_tokens: 2048,
       messages: [{
         role: 'user',
-        content: `Summarise the following document. Return ONLY valid JSON with this exact structure: { "overview": "2-3 sentence overview", "themes": ["theme 1", "theme 2"], "conclusions": ["conclusion 1", "conclusion 2"] }. Be concise and professional.\n\n${text}`,
+        content: `Summarize the following document. Return ONLY valid JSON with this exact structure: { "overview": "2-3 sentence overview", "themes": ["theme 1", "theme 2"], "conclusions": ["conclusion 1", "conclusion 2"] }. Be concise and professional.\n\n${text}`,
       }],
     })
 
@@ -60,6 +60,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(summary)
   } catch (err) {
     console.error('summarise-doc error:', err)
-    return NextResponse.json({ error: 'Failed to summarise document. Please try again.' }, { status: 500 })
+      return NextResponse.json({ error: 'Failed to summarize document. Please try again.' }, { status: 500 })
   }
 }

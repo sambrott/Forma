@@ -69,12 +69,12 @@ export function CyclingPhrase() {
         the friction.
       </span>
       {beforeStart && (
-        <span className={`${styles.phraseLayer} ${styles.phraseLayerStable} ${styles.hiddenBeforeStart}`}>
+        <span className={`${styles.phraseLayer} ${styles.hiddenBeforeStart}`}>
           {PHRASES[0]}
         </span>
       )}
       {firstEnter && (
-        <span className={`${styles.phraseLayer} ${styles.phraseLayerStable} ${styles.entering}`}>
+        <span className={`${styles.phraseLayer} ${styles.entering}`}>
           {PHRASES[0]}
         </span>
       )}
@@ -85,7 +85,7 @@ export function CyclingPhrase() {
         </>
       )}
       {!beforeStart && !firstEnter && !cross && (
-        <span className={`${styles.phraseLayer} ${styles.phraseLayerStable} ${styles.visible}`}>
+        <span className={`${styles.phraseLayer} ${styles.visible}`}>
           {PHRASES[stableIndex]}
         </span>
       )}

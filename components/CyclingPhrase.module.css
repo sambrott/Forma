@@ -9,9 +9,9 @@
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   isolation: isolate;
-  /* Space for descenders + exit animation moving up; min line box */
-  min-height: 1.22em;
-  padding: 0.14em 2px 0.32em;
+  /* Fixed rail: all phrase layers are absolute — avoids jump when crossfade starts/ends */
+  min-height: 1.34em;
+  padding: 0.06em 2px 0.26em;
   box-sizing: content-box;
   /* Width locked to longest phrase so shorter lines don’t shift layout */
   min-width: 13ch;
@@ -37,13 +37,6 @@
   white-space: nowrap;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-}
-
-.phraseLayerStable {
-  position: relative;
-  left: auto;
-  top: auto;
-  width: max-content;
 }
 
 .visible {

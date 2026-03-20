@@ -18,7 +18,8 @@
   letter-spacing: var(--tracking-tight);
   line-height: 1.06;
   color: var(--text);
-  margin: var(--space-2) 0 var(--space-2);
+  /* Match About: title → next copy block = space-6 */
+  margin: var(--space-2) 0 var(--space-6);
 }
 
 .subtitle {
@@ -37,6 +38,20 @@
   width: 100%;
   margin: 0;
   justify-items: stretch;
+  align-items: stretch;
+}
+
+/* CTA rows align across tiers (different feature counts) */
+.grid :global(.pricing-card) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.cardActions {
+  margin-top: auto;
+  width: 100%;
+  padding-top: 20px;
 }
 
 @media (max-width: 900px) {
@@ -95,5 +110,9 @@
   .grid :global(.btn-full) {
     padding: 8px 10px;
     font-size: 10px;
+  }
+
+  .cardActions {
+    padding-top: 12px;
   }
 }

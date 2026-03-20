@@ -7,7 +7,7 @@ import ProgressBar from '@/components/ProgressBar'
 import { useTool } from '@/lib/use-tool'
 import type { SummaryResult } from '@/types'
 
-export default function SummariseDocPage() {
+export default function SummarizeDocPage() {
   const { state, process, reset } = useTool('/api/summarise-doc')
   const [showResult, setShowResult] = useState(false)
 
@@ -30,7 +30,7 @@ export default function SummariseDocPage() {
   }
 
   return (
-    <ToolPageLayout title="Summarise Doc" description="Get key points from any document using AI: overview, themes, and conclusions.">
+    <ToolPageLayout title="Summarize Doc" description="Get key points from any document using AI: overview, themes, and conclusions.">
       {state.status === 'idle' && (
         <ToolDrop accept=".pdf,.docx,.txt" onFiles={files => process(files[0])} label="Drop your document here" hint="PDF · DOCX · TXT · up to 100 MB · 3 free AI uses per day" />
       )}
@@ -55,7 +55,7 @@ export default function SummariseDocPage() {
             </ul>
           </div>
           <div className="result-actions" style={{ marginTop: 24, justifyContent: 'center' }}>
-            <button className="btn btn-ghost" onClick={handleReset}>Summarise another</button>
+            <button className="btn btn-ghost" onClick={handleReset}>Summarize another</button>
           </div>
         </div>
       )}

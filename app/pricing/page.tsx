@@ -35,7 +35,7 @@ export default function PricingPage() {
             <li>{CHECK}3 AI uses per day</li>
             <li className="dim">{CHECK}Up to 100 MB per file</li>
           </ul>
-          <div style={{ marginTop: 20 }}>
+          <div className={styles.cardActions}>
             <Link href="/tools" className="btn btn-ghost btn-full">Start free</Link>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default function PricingPage() {
             <li>{CHECK}320 kbps audio export</li>
             <li>{CHECK}Priority processing</li>
           </ul>
-          <div style={{ marginTop: 20 }}>
+          <div className={styles.cardActions}>
             <Link href="/api/stripe/checkout" className="btn btn-primary btn-full">Get Pro</Link>
           </div>
         </div>

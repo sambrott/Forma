@@ -6,7 +6,7 @@ export const TOOLS: Tool[] = [
   { slug: 'split-pdf',         name: 'Split PDF',         desc: 'Extract pages or split by range',          cat: 'PDF',   isAI: false, icon: 'file-split',    accepts: ['.pdf'] },
   { slug: 'pdf-to-excel',      name: 'PDF → Excel',       desc: 'AI-powered table extraction',              cat: 'AI',    isAI: true,  icon: 'table',         accepts: ['.pdf'] },
   { slug: 'pdf-to-word',       name: 'PDF → Word',        desc: 'Convert to editable document',             cat: 'PDF',   isAI: false, icon: 'file-text',     accepts: ['.pdf'] },
-  { slug: 'summarise-doc',     name: 'Summarise Doc',     desc: 'Key points from any document',             cat: 'AI',    isAI: true,  icon: 'file-lines',    accepts: ['.pdf','.docx','.txt'] },
+  { slug: 'summarise-doc',     name: 'Summarize Doc',     desc: 'Key points from any document',             cat: 'AI',    isAI: true,  icon: 'file-lines',    accepts: ['.pdf','.docx','.txt'] },
   { slug: 'convert-image',     name: 'Convert Image',     desc: 'HEIC, PNG, WebP, JPG: any format',        cat: 'Image', isAI: false, icon: 'image',         accepts: ['.jpg','.jpeg','.png','.webp','.heic','.avif','.tiff'] },
   { slug: 'remove-background', name: 'Remove Background', desc: 'AI background removal in one click',       cat: 'AI',    isAI: true,  icon: 'image-off',     accepts: ['.jpg','.jpeg','.png','.webp'] },
   { slug: 'extract-audio',     name: 'Extract Audio',     desc: 'Pull MP3 from any video',                  cat: 'Audio', isAI: false, icon: 'music',         accepts: ['.mp4','.mov','.avi','.mkv','.webm'] },

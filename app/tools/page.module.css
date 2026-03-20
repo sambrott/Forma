@@ -15,7 +15,8 @@
   letter-spacing: var(--tracking-tight);
   line-height: 1.06;
   color: var(--text);
-  margin: var(--space-2) 0 var(--space-2);
+  /* Match About: eyebrow → title rhythm, then title → copy = space-6 */
+  margin: var(--space-2) 0 var(--space-6);
 }
 
 .subtitle {
@@ -23,6 +24,7 @@
   color: var(--text-sub);
   line-height: 1.48;
   max-width: 520px;
+  margin: 0;
 }
 
 .grid {

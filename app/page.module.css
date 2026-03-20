@@ -24,6 +24,7 @@
   min-width: 0;
   /* Lock vertical space so cycling headline never nudges rows below */
   contain: layout style;
+  justify-self: start;
 }
 
 .heroSub {
@@ -115,12 +116,12 @@
   }
 
   .heroTrust {
-    margin-top: calc(-1 * var(--space-2));
+    margin-top: calc(-1 * var(--space-4));
   }
 
   .heroTrust :global(.trust-bar) {
-    padding-top: var(--space-3);
-    padding-bottom: var(--space-3);
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
   }
 }
 
@@ -159,7 +160,12 @@
   .heroTrust {
     grid-column: 1;
     grid-row: auto;
-    margin-top: calc(-1 * var(--space-2));
+    margin-top: calc(-1 * var(--space-3));
+  }
+
+  .heroTrust :global(.trust-bar) {
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   .heroToolsWrap {

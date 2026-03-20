@@ -24,7 +24,7 @@
   line-height: 1.48;
 }
 
-/* Consistent vertical rhythm between upload, options, results, privacy (matches mobile summarise flow) */
+/* Consistent vertical rhythm between upload, options, results, privacy (matches mobile summarize flow) */
 .stack {
   display: flex;
   flex-direction: column;
