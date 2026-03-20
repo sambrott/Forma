@@ -18,7 +18,7 @@ export default function Nav() {
   const [dropOpen, setDropOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const dropRef = useRef<HTMLDivElement>(null)
-  const navRef = useRef<HTMLNavElement>(null)
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return

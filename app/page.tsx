@@ -32,7 +32,7 @@ export default function HomePage() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.heroLeft}>
+      <div className={styles.heroIntro}>
         <div className="eyebrow">
           <div className="eyebrow-dot" />
           <div className="eyebrow-text">Private · Free · No account required</div>
@@ -45,6 +45,9 @@ export default function HomePage() {
         <div className={`${styles.homeDrop} ${styles.homeDropMobile}`}>
           <ToolDrop onFiles={handleFiles} />
         </div>
+      </div>
+
+      <div className={styles.heroTrust}>
         <TrustBar />
       </div>
 
