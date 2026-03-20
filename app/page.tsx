@@ -39,14 +39,16 @@ export default function HomePage() {
         </div>
         <HeadlineAnimation />
         <p className={styles.heroSub}>
-          Document, image, and media tools built for people who know what they need.
+          Image, document, and media tools built for people who know what they need.
           Files deleted the moment you&apos;re done.
         </p>
+        <div className={styles.homeDrop}>
+          <ToolDrop onFiles={handleFiles} />
+        </div>
         <TrustBar />
       </div>
 
       <div className={styles.heroRight}>
-        <ToolDrop onFiles={handleFiles} />
         <div className={styles.toolsPanel}>
           <div className={styles.toolsHeader}>
             <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent)' }}>

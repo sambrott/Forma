@@ -9,8 +9,10 @@ export default function TrustBar() {
     <div className="trust-bar">
       {items.map(text => (
         <div key={text} className="trust-item">
-          <div className="trust-check">{CHECK}</div>
-          {text}
+          <div className="trust-check-col">
+            <div className="trust-check">{CHECK}</div>
+          </div>
+          <div className="trust-text">{text}</div>
         </div>
       ))}
     </div>

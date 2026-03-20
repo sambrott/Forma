@@ -62,17 +62,19 @@
 .right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
-.signInLink {
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 150ms;
+/* Sign in: secondary button — visible hierarchy under Go Pro */
+.signInBtn {
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
-.signInLink:hover { color: var(--text); }
+
+.goProBtn {
+  font-weight: 600;
+}
 
 /* Avatar + dropdown */
 .userMenu {
@@ -133,7 +135,9 @@
 }
 
 @media (max-width: 640px) {
-  .nav { padding: 0 20px; }
+  .nav { padding: 0 16px; }
   .links { display: none; }
-  .right :global(.btn) { display: none; }
+  .right {
+    gap: 8px;
+  }
 }

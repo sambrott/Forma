@@ -10,15 +10,16 @@
 }
 .tabBar::-webkit-scrollbar { display: none; }
 
+/* Match pricing Pro card: 1px accent border, full opacity */
 .indicator {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   height: calc(100% - 14px);
-  border: 1.5px solid var(--accent);
-  border-radius: var(--radius-sm);
-  opacity: 0.75;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-lg);
   pointer-events: none;
+  box-sizing: border-box;
 }
 
 .indicatorAnimate {

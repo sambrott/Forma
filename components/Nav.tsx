@@ -106,11 +106,11 @@ export default function Nav() {
               )}
             </div>
           ) : (
-            <Link href="/login" className={styles.signInLink}>
+            <Link href="/login" className={`btn btn-secondary btn-sm ${styles.signInBtn}`}>
               Sign in
             </Link>
           )}
-          <Link href="/pricing" className="btn btn-secondary btn-sm">
+          <Link href="/pricing" className={`btn btn-primary btn-sm ${styles.goProBtn}`}>
             Go Pro
           </Link>
         </div>

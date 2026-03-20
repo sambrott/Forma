@@ -22,6 +22,11 @@
   max-width: 420px;
 }
 
+.homeDrop {
+  width: 100%;
+  max-width: 520px;
+}
+
 .heroRight {
   display: flex;
   flex-direction: column;

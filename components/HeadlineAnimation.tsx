@@ -94,7 +94,10 @@ export default function HeadlineAnimation() {
       const { w: W, h: H } = sizeRef.current
       if (!ctx || !W || !H) { raf = requestAnimationFrame(drawWave); return }
 
-      ctx.clearRect(0, 0, W, H)
+      const dpr = window.devicePixelRatio || 1
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.scale(dpr, dpr)
 
       const SPACING = 16
       const cols = Math.ceil(W / SPACING) + 1
