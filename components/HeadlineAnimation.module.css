@@ -2,13 +2,11 @@
   position: relative;
   cursor: default;
   user-select: none;
-  /* Desktop: matches previous inline padding; canvas + halftone sit in same frame as before */
   padding: 32px;
 }
 
 @media (max-width: 900px) {
   .wrap {
-    /* Mobile: no extra inset; animation lines up with hero text in single-column layout */
     padding: 0;
     width: 100%;
     max-width: 100%;
@@ -35,17 +33,29 @@
   color: var(--text);
 }
 
+@media (min-width: 901px) {
+  .text {
+    min-height: calc(3 * 1.02em);
+  }
+}
+
 .text em {
   font-style: italic;
   color: var(--accent);
 }
 
 @media (max-width: 768px) {
-  .text { font-size: 52px; }
+  .text {
+    font-size: 52px;
+  }
 }
 @media (max-width: 480px) {
-  .text { font-size: 40px; }
+  .text {
+    font-size: 40px;
+  }
 }
 @media (max-width: 360px) {
-  .text { font-size: 34px; }
+  .text {
+    font-size: 34px;
+  }
 }

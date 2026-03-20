@@ -36,7 +36,8 @@
   font-weight: 300;
   color: var(--text);
   margin: 0 0 8px;
-  line-height: 1.2;
+  line-height: 1.12;
+  letter-spacing: var(--tracking-tight);
 }
 
 .sub {

@@ -5,14 +5,15 @@
 }
 
 .header {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-5);
 }
 
 .title {
   font-family: var(--font-display);
   font-size: var(--text-3xl);
   font-weight: 300;
-  letter-spacing: var(--tracking-snug);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
   color: var(--text);
   margin-bottom: var(--space-2);
 }
@@ -20,7 +21,7 @@
 .desc {
   font-size: var(--text-md);
   color: var(--text-sub);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
 }
 
 /* Consistent vertical rhythm between upload, options, results, privacy (matches mobile summarise flow) */

@@ -56,22 +56,20 @@ export default function HomePage() {
         <TrustBar />
       </div>
 
-      <div className={styles.heroRight}>
-        <div className={`${styles.homeDrop} ${styles.homeDropDesktop}`}>
+      <div className={styles.heroToolsWrap}>
+        <div className={styles.heroDropDesktop}>
           <ToolDrop onFiles={handleFiles} />
-        </div>
-        <div className={styles.toolsPanel}>
           <div className={styles.toolsHeader}>
             <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent)' }}>
               Popular tools
             </span>
             <a href="/tools" className="btn btn-ghost btn-sm">View all →</a>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-            {FEATURED_TOOLS.map(tool => (
-              <ToolRow key={tool.slug} tool={tool} />
-            ))}
-          </div>
+        </div>
+        <div className={styles.toolsList}>
+          {FEATURED_TOOLS.map(tool => (
+            <ToolRow key={tool.slug} tool={tool} />
+          ))}
         </div>
       </div>
     </main>

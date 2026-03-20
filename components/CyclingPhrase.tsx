@@ -21,7 +21,6 @@ function sleep(ms: number) {
   })
 }
 
-/** Long waits split so `paused` can take effect without waiting the full duration. */
 async function sleepInterruptible(
   totalMs: number,
   pausedRef: MutableRefObject<boolean>,
@@ -72,7 +71,6 @@ export function CyclingPhrase({ paused = false }: CyclingPhraseProps) {
 
         const next = (idx + 1) % PHRASES.length
         setCross({ from: idx, to: next })
-        /* Enter starts OVERLAP_DELAY ms after exit; enter runs ENTER_DURATION → done at OVERLAP_DELAY + ENTER_DURATION */
         await sleep(OVERLAP_DELAY + ENTER_DURATION)
         if (cancelledRef.current) return
 

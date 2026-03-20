@@ -81,18 +81,6 @@ export default function Nav() {
           <Link href="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
             forma<em>.</em>
           </Link>
-          <button
-            type="button"
-            className={styles.menuBtn}
-            aria-expanded={menuOpen}
-            aria-controls="nav-mobile-menu"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setMenuOpen(o => !o)}
-          >
-            <span className={styles.menuBar} data-open={menuOpen} />
-            <span className={styles.menuBar} data-open={menuOpen} />
-            <span className={styles.menuBar} data-open={menuOpen} />
-          </button>
         </div>
 
         <ul className={styles.links}>
@@ -138,6 +126,18 @@ export default function Nav() {
           <Link href="/pricing" className={`btn btn-primary btn-sm ${styles.goProBtn}`}>
             Go Pro
           </Link>
+          <button
+            type="button"
+            className={styles.menuBtn}
+            aria-expanded={menuOpen}
+            aria-controls="nav-mobile-menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMenuOpen(o => !o)}
+          >
+            <span className={styles.menuBar} data-open={menuOpen} />
+            <span className={styles.menuBar} data-open={menuOpen} />
+            <span className={styles.menuBar} data-open={menuOpen} />
+          </button>
         </div>
 
         {menuOpen && (

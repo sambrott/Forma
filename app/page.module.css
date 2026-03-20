@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: var(--space-12) var(--space-6) var(--space-20);
   display: grid;
-  /* Desktop: col1 rows = eyebrow, headline, sub, trust. Col2 = drop+tools top-aligned with headline (row 2). */
+  /* Desktop: col1 = eyebrow, headline, sub, trust. Col2 = drop+header (row2), tool rows (row3) — tops of sub & first tool row align. */
   grid-template-columns: 1fr var(--sidebar-width);
   grid-template-rows: auto auto auto auto;
   column-gap: var(--space-10);
@@ -14,7 +14,7 @@
 .heroEyebrow {
   grid-column: 1;
   grid-row: 1;
-  padding-top: var(--space-10);
+  padding-top: var(--space-8);
   min-width: 0;
 }
 
@@ -49,25 +49,20 @@
   display: none;
 }
 
-.homeDropDesktop {
-  display: block;
+/* Wrapper: desktop = display:contents so children sit in main grid; mobile = stacked block */
+.heroToolsWrap {
+  display: contents;
 }
 
-/* Right column: starts same row as headline, spans headline + sub + trust rows */
-.heroRight {
+.heroDropDesktop {
   grid-column: 2;
-  grid-row: 2 / span 3;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
   align-self: start;
   min-width: 0;
-}
-
-.toolsPanel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  width: 100%;
 }
 
 .toolsHeader {
@@ -75,6 +70,33 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--space-1);
+}
+
+.toolsList {
+  grid-column: 2;
+  grid-row: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-self: start;
+  min-width: 0;
+  width: 100%;
+}
+
+@media (min-width: 901px) {
+  .main {
+    row-gap: var(--space-5);
+  }
+
+  /* ~½ a tool-row height — pulls trust block up under the subhead */
+  .heroTrust {
+    margin-top: -34px;
+  }
+
+  .heroTrust :global(.trust-bar) {
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+  }
 }
 
 @media (max-width: 900px) {
@@ -112,9 +134,12 @@
   .heroTrust {
     grid-column: 1;
     grid-row: auto;
+    margin-top: 0;
   }
 
-  .heroRight {
+  .heroToolsWrap {
+    display: flex;
+    flex-direction: column;
     grid-column: 1;
     grid-row: auto;
     border-left: none;
@@ -123,8 +148,13 @@
     gap: var(--mobile-stack-gap, 24px);
   }
 
-  .homeDropDesktop {
+  .heroDropDesktop {
     display: none;
+  }
+
+  .toolsList {
+    grid-column: auto;
+    grid-row: auto;
   }
 }
 
