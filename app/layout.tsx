@@ -10,13 +10,30 @@ import { PostHogProvider } from '@/components/PostHogProvider'
 import { PostHogPageView } from '@/components/PostHogPageView'
 import './globals.css'
 
+const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'Forma | Free Professional File & Document Tools',
-    description: 'Compress PDFs, convert images, extract audio, summarize documents: all free, private, and instant. Files deleted immediately.',
+  description:
+    'Compress PDFs, convert images, extract audio, summarize documents: all free, private, and instant. Files deleted immediately.',
   openGraph: {
     title: 'Forma | Free Professional File & Document Tools',
-    description: 'Compress PDFs, convert images, extract audio, summarize documents: all free, private, and instant.',
+    description:
+      'Compress PDFs, convert images, extract audio, summarize documents: all free, private, and instant.',
     type: 'website',
+    locale: 'en_US',
+    siteName: 'Forma',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Forma | Free Professional File & Document Tools',
+    description:
+      'Compress PDFs, convert images, extract audio, summarize documents: all free, private, and instant.',
+  },
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
   },
 }
 
