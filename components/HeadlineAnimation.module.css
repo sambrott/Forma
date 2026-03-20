@@ -5,13 +5,13 @@
   padding: 32px;
 }
 
-/* Desktop: box hugs headline copy; same 32px pad on all sides (text ↔ halftone border). */
+/* Desktop: halftone box tight around headline copy — 10px margin on each side. */
 @media (min-width: 901px) {
   .wrap {
     width: fit-content;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 32px;
+    padding: 10px;
     align-self: start;
   }
 
