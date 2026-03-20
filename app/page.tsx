@@ -32,19 +32,24 @@ export default function HomePage() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.heroIntro}>
+      <div className={styles.heroEyebrow}>
         <div className="eyebrow">
           <div className="eyebrow-dot" />
           <div className="eyebrow-text">Private · Free · No account required</div>
         </div>
+      </div>
+
+      <div className={styles.heroHeadline}>
         <HeadlineAnimation />
-        <p className={styles.heroSub}>
-          Image, document, and media tools built for people who know what they need.
-          Files deleted the moment you&apos;re done.
-        </p>
-        <div className={`${styles.homeDrop} ${styles.homeDropMobile}`}>
-          <ToolDrop onFiles={handleFiles} />
-        </div>
+      </div>
+
+      <p className={styles.heroSub}>
+        Image, document, and media tools built for people who know what they need.
+        Files deleted the moment you&apos;re done.
+      </p>
+
+      <div className={`${styles.homeDrop} ${styles.homeDropMobile}`}>
+        <ToolDrop onFiles={handleFiles} />
       </div>
 
       <div className={styles.heroTrust}>
