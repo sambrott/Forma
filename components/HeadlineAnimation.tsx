@@ -86,14 +86,15 @@ export default function HeadlineAnimation() {
         const br = 0.95 + 0.5 * breathe
 
         if (hb * ht > 0.02) {
-          /* Same hover behavior as dark (falloff, size, alpha); light gets stronger orange mix only */
-          let orangeT = Math.pow(ht, 1.35) * hb
+          /* Size/alpha use same orangeT as dark; light boosts color mix only (so dot radius matches dark) */
+          const orangeT = Math.pow(ht, 1.35) * hb
+          let blendT = orangeT
           if (!dark) {
-            orangeT = Math.min(1, orangeT * 1.55)
+            blendT = Math.min(1, orangeT * 1.55)
           }
-          const rr = Math.round(232 * orangeT + baseRgb[0] * (1 - orangeT))
-          const gg = Math.round(98 * orangeT + baseRgb[1] * (1 - orangeT))
-          const bb = Math.round(42 * orangeT + baseRgb[2] * (1 - orangeT))
+          const rr = Math.round(232 * blendT + baseRgb[0] * (1 - blendT))
+          const gg = Math.round(98 * blendT + baseRgb[1] * (1 - blendT))
+          const bb = Math.round(42 * blendT + baseRgb[2] * (1 - blendT))
           const ar = br + orangeT * 3.2
           const alpha = Math.min(0.55, baseAlpha + orangeT * 0.42)
           ctx.beginPath()
