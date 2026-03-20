@@ -11,7 +11,7 @@
     width: 100%;
     max-width: 420px;
     box-sizing: border-box;
-    /* Top/left anchor unchanged; right inset +20; no bottom pad (−10px) + text min-height trim (−5px) = −15px vs prior */
+    /* Top/left anchor unchanged; right inset +20; no bottom pad */
     padding: 10px 30px 0 10px;
     align-self: start;
   }
@@ -19,7 +19,7 @@
   .text {
     width: 100%;
     max-width: 100%;
-    min-height: calc(3 * 1.02em + 0.12em - 5px);
+    min-height: calc(3 * 1.02em + 0.12em - 20px);
   }
 }
 
@@ -54,8 +54,8 @@
   letter-spacing: var(--tracking-tight);
   line-height: 1.02;
   color: var(--text);
-  /* Fixed 3-line block + a little extra for third-line descenders / blur */
-  min-height: calc(3 * 1.02em + 0.12em);
+  /* Fixed 3-line block + trim lower dead space (~15px) for halftone canvas */
+  min-height: calc(3 * 1.02em + 0.12em - 15px);
   contain: layout style;
 }
 

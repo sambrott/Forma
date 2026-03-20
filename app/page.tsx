@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import HeadlineAnimation from '@/components/HeadlineAnimation'
 import TrustBar from '@/components/TrustBar'
@@ -61,12 +62,16 @@ export default function HomePage() {
           <ToolDrop onFiles={handleFiles} />
           <div className={styles.toolsHeader}>
             <span className={styles.toolsHeaderLabel}>Popular tools</span>
-            <a href="/tools" className="btn btn-ghost btn-sm">View all →</a>
+            <Link href="/tools" className={styles.viewAll}>
+              View all <span className={styles.viewAllArrow} aria-hidden>→</span>
+            </Link>
           </div>
         </div>
         <div className={styles.toolsHeaderMobile}>
           <span className={styles.toolsHeaderLabel}>Popular tools</span>
-          <a href="/tools" className="btn btn-ghost btn-sm">View all →</a>
+          <Link href="/tools" className={styles.viewAll}>
+            View all <span className={styles.viewAllArrow} aria-hidden>→</span>
+          </Link>
         </div>
         <div className={styles.toolsList}>
           {FEATURED_TOOLS.map(tool => (

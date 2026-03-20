@@ -10,18 +10,22 @@ interface ToolCardProps {
 export default function ToolCard({ tool }: ToolCardProps) {
   return (
     <Link href={`/tools/${tool.slug}`} className="tool-card">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div className="tool-card-icon">
-          <ToolIcon name={tool.icon} />
-        </div>
-        {tool.isAI ? (
-          <span className="badge badge-ai" style={{ fontSize: 8 }}>✦ AI</span>
-        ) : (
-          <span className="tool-card-arrow">↗</span>
-        )}
+      <div className="tool-card-icon">
+        <ToolIcon name={tool.icon} />
       </div>
-      <div className="tool-card-name">{tool.name}</div>
-      <div className="tool-card-desc">{tool.desc}</div>
+      <div className="tool-card-body">
+        <div className="tool-card-name">{tool.name}</div>
+        <div className="tool-card-desc">{tool.desc}</div>
+      </div>
+      <div className="tool-card-meta">
+        <span className={`badge ${getBadgeClass(tool.cat)}`}>
+          {tool.isAI ? '✦ ' : ''}
+          {tool.cat}
+        </span>
+        <span className="tool-card-arrow" aria-hidden>
+          ↗
+        </span>
+      </div>
     </Link>
   )
 }

@@ -31,7 +31,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-3);
-  min-height: 200px;
 }
 
 @media (max-width: 900px) {
@@ -48,5 +47,9 @@
   .main {
     padding: var(--page-main-pt-mobile) var(--page-main-px-mobile) var(--space-16);
   }
-  .grid { grid-template-columns: 1fr; }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
 }
