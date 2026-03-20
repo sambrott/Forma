@@ -9,6 +9,8 @@ import { PageTransition } from '@/components/PageTransition'
 import { PostHogProvider } from '@/components/PostHogProvider'
 import { PostHogPageView } from '@/components/PostHogPageView'
 import './globals.css'
+import ogImageDark from './forma-og-dark.png'
+import ogImageLight from './forma-og-light.png'
 
 const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
 
@@ -27,13 +29,13 @@ export const metadata: Metadata = {
     /* Primary = dark OG (default for previews); light = alternate for platforms that use second image */
     images: [
       {
-        url: '/opengraph-image.png',
+        url: ogImageDark.src,
         width: 1200,
         height: 630,
         alt: 'Forma — Work done. Without the noise.',
       },
       {
-        url: '/og-image-light.png',
+        url: ogImageLight.src,
         width: 1200,
         height: 630,
         alt: 'Forma — Work done. Without the noise. (light)',
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
     title: 'Forma | Free Professional File & Document Tools',
     description:
       'Compress PDFs, convert images, extract audio, summarize documents: all free, private, and instant.',
-    images: ['/opengraph-image.png'],
+    images: [ogImageDark.src],
   },
   icons: {
     icon: '/icon.png',
