@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import ThemeToggle from './ThemeToggle'
 import styles from './Nav.module.css'
 
@@ -96,8 +96,10 @@ export default function Nav() {
           ))}
         </ul>
 
-        <div className={styles.right}>
-          <ThemeToggle />
+        <div className={`${styles.right} ${!user ? styles.rightLoggedOutMobile : ''}`}>
+          <span className={styles.themeSlot}>
+            <ThemeToggle />
+          </span>
           {user ? (
             <div className={styles.userMenu} ref={dropRef}>
               <button
@@ -119,7 +121,7 @@ export default function Nav() {
               )}
             </div>
           ) : (
-            <Link href="/login" className={`btn btn-secondary btn-sm ${styles.signInBtn}`}>
+            <Link href="/login" className={`btn btn-secondary btn-sm ${styles.signInBtn} ${styles.signInBarOnly}`}>
               Sign in
             </Link>
           )}
@@ -143,14 +145,24 @@ export default function Nav() {
         {menuOpen && (
           <div id="nav-mobile-menu" className={styles.mobileMenu}>
             {links.map(l => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`${styles.mobileLink} ${pathname === l.href ? styles.mobileLinkActive : ''}`}
-                onClick={() => setMenuOpen(false)}
-              >
-                {l.label}
-              </Link>
+              <Fragment key={l.href}>
+                <Link
+                  href={l.href}
+                  className={`${styles.mobileLink} ${pathname === l.href ? styles.mobileLinkActive : ''}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {l.label}
+                </Link>
+                {l.href === '/' && !user && (
+                  <Link
+                    href="/login"
+                    className={`${styles.mobileLink} ${pathname === '/login' ? styles.mobileLinkActive : ''}`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Sign in
+                  </Link>
+                )}
+              </Fragment>
             ))}
           </div>
         )}

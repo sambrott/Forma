@@ -43,8 +43,8 @@
   grid-column: 1;
   grid-row: 4;
   min-width: 0;
-  /* Tight under subhead; still below the paragraph */
-  margin-top: calc(-1 * var(--space-2));
+  /* Pulled up close under the hero paragraph (see desktop / tablet overrides too) */
+  margin-top: calc(-1 * var(--space-6));
 }
 
 .homeDrop {
@@ -115,8 +115,20 @@
     margin-top: 0;
   }
 
+  /*
+   * Trust bar sits in row 4; tools list (6 rows) lives in row 3 and sets row height.
+   * Pull up so the trust bar’s top meets the lower third of the 2nd featured tool
+   * (Merge PDFs — order: Compress, Merge, Split, …).
+   * Tune --home-tool-row-h if tool rows render taller/shorter than ~60px.
+   */
   .heroTrust {
-    margin-top: calc(-1 * var(--space-4));
+    --home-tool-row-h: 60px;
+    --home-tool-gap: 5px;
+    --merge-lower-third-y: calc(
+      var(--home-tool-row-h) + var(--home-tool-gap) + var(--home-tool-row-h) * 2 / 3
+    );
+    --tools-list-h: calc(6 * var(--home-tool-row-h) + 5 * var(--home-tool-gap));
+    margin-top: calc(var(--merge-lower-third-y) - var(--tools-list-h));
   }
 
   .heroTrust :global(.trust-bar) {
@@ -160,12 +172,12 @@
   .heroTrust {
     grid-column: 1;
     grid-row: auto;
-    margin-top: calc(-1 * var(--space-3));
+    margin-top: calc(-1 * var(--space-8));
   }
 
   .heroTrust :global(.trust-bar) {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 6px;
+    padding-bottom: 10px;
   }
 
   .heroToolsWrap {

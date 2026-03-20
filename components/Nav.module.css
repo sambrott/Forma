@@ -151,6 +151,12 @@
   flex-shrink: 0;
 }
 
+.themeSlot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .signInBtn {
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -270,18 +276,22 @@
     z-index: var(--z-dropdown);
   }
 
-  /* No double border between theme control and Sign in */
-  .signInBtn {
-    border-color: transparent !important;
-    background: transparent !important;
-    color: var(--text) !important;
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+  /* Sign in lives in hamburger menu, not the bar */
+  .signInBarOnly {
+    display: none !important;
   }
 
-  .signInBtn:hover {
-    border-color: var(--border-soft) !important;
-    background: var(--surface) !important;
+  /* Logged out: Go Pro → theme (old Sign-in slot) → menu */
+  .rightLoggedOutMobile .goProBtn {
+    order: 1;
+  }
+
+  .rightLoggedOutMobile .themeSlot {
+    order: 2;
+  }
+
+  .rightLoggedOutMobile .menuBtn {
+    order: 3;
   }
 
   .right {

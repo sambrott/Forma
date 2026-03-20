@@ -5,14 +5,20 @@
   padding: 32px;
 }
 
-/* Desktop: keep top-left anchored; shrink box from bottom-right (tighter under third line, even L/R pad) */
+/* Desktop: box hugs headline copy; same 32px pad on all sides (text ↔ halftone border). */
 @media (min-width: 901px) {
   .wrap {
     width: fit-content;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 32px 32px 16px 32px;
+    padding: 32px;
     align-self: start;
+  }
+
+  /* Block-level text was stretching to full grid column → box too wide on the right */
+  .text {
+    width: max-content;
+    max-width: 100%;
   }
 }
 
@@ -21,6 +27,11 @@
     padding: 0;
     width: 100%;
     max-width: 100%;
+  }
+
+  /* ~+20% hero type on mobile stack; em-based min-height on .text scales with it */
+  .text {
+    font-size: calc(var(--text-hero) * 1.2);
   }
 }
 
@@ -54,16 +65,16 @@
 
 @media (max-width: 768px) {
   .text {
-    font-size: 52px;
+    font-size: calc(52px * 1.2);
   }
 }
 @media (max-width: 480px) {
   .text {
-    font-size: 40px;
+    font-size: calc(40px * 1.2);
   }
 }
 @media (max-width: 360px) {
   .text {
-    font-size: 34px;
+    font-size: calc(34px * 1.2);
   }
 }
