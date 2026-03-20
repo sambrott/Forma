@@ -73,9 +73,16 @@ export default function ConvertImagePage() {
               </select>
             </OptionRow>
             <OptionRow label="Quality" hint="Affects final file size">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <input type="range" className="range" min={10} max={100} value={quality} onChange={e => setQuality(Number(e.target.value))} style={{ width: 120 }} />
-                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{quality}%</span>
+              <div className="range-field">
+                <input
+                  type="range"
+                  className="range"
+                  min={10}
+                  max={100}
+                  value={quality}
+                  onChange={e => setQuality(Number(e.target.value))}
+                />
+                <span className="range-value">{quality}%</span>
               </div>
             </OptionRow>
           </ToolOptions>

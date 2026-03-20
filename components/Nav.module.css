@@ -326,27 +326,29 @@
     gap: 0;
     padding: 6px 0;
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
     z-index: var(--z-dropdown);
     overflow: hidden;
-    backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    /* Match top nav bar glass (same blur / saturation / opacity per theme) */
   }
 
   :global([data-theme='light']) .mobileMenu {
-    background: rgba(247, 244, 239, 0.9);
-    border: 0.5px solid rgba(180, 168, 155, 0.32);
+    background: rgba(247, 244, 239, 0.72);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 0.5px solid rgba(180, 168, 155, 0.25);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.45) inset,
-      0 12px 40px rgba(0, 0, 0, 0.08);
+      0 1px 0 rgba(255, 255, 255, 0.4) inset,
+      0 12px 40px rgba(0, 0, 0, 0.1);
   }
 
   :global([data-theme='dark']) .mobileMenu {
-    background: rgba(12, 12, 12, 0.86);
-    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    background: rgba(9, 9, 9, 0.7);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border: 0.5px solid rgba(255, 255, 255, 0.07);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.04) inset,
-      0 12px 40px rgba(0, 0, 0, 0.5);
+      0 1px 0 rgba(255, 255, 255, 0.03) inset,
+      0 12px 40px rgba(0, 0, 0, 0.45);
   }
 
   /* Sign in lives in hamburger menu, not the bar */

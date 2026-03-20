@@ -15,7 +15,7 @@ export function ToolTabs() {
     raw === 'Audio' || raw === 'Video' ? 'Media' : raw
 
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
-  const [indicator, setIndicator] = useState({ left: 0, width: 0 })
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, top: 0, height: 0 })
   const [indicatorVisible, setIndicatorVisible] = useState(false)
   const [animate, setAnimate] = useState(false)
   const hasPositionedOnce = useRef(false)
@@ -38,6 +38,8 @@ export function ToolTabs() {
       setIndicator({
         left: elRect.left - parentRect.left,
         width: elRect.width,
+        top: elRect.top - parentRect.top,
+        height: elRect.height,
       })
       setIndicatorVisible(true)
     }
@@ -61,6 +63,8 @@ export function ToolTabs() {
       setIndicator({
         left: elRect.left - parentRect.left,
         width: elRect.width,
+        top: elRect.top - parentRect.top,
+        height: elRect.height,
       })
     }
     window.addEventListener('resize', handleResize)
@@ -82,6 +86,8 @@ export function ToolTabs() {
           style={{
             left: `${indicator.left}px`,
             width: `${indicator.width}px`,
+            top: `${indicator.top}px`,
+            height: `${indicator.height}px`,
           }}
         />
       )}

@@ -3,16 +3,40 @@
 }
 
 .enter {
-  animation: pageEnter 0.18s cubic-bezier(0, 0, 0.2, 1) forwards;
+  animation: pageEnter 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes pageEnter {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Slightly longer + softer ease so short transitions don’t feel jumpy on small screens */
+@media (max-width: 640px) {
+  .enter {
+    animation: pageEnterMobile 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+@keyframes pageEnterMobile {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter {
+    animation: none;
   }
 }
