@@ -22,6 +22,8 @@
   grid-column: 1;
   grid-row: 2;
   min-width: 0;
+  /* Lock vertical space so cycling headline never nudges rows below */
+  contain: layout style;
 }
 
 .heroSub {
@@ -32,12 +34,16 @@
   line-height: 1.48;
   max-width: 420px;
   min-width: 0;
+  /* Reserve two lines so trust block doesn’t shift with copy reflow */
+  min-height: calc(2em * 1.48);
 }
 
 .heroTrust {
   grid-column: 1;
   grid-row: 4;
   min-width: 0;
+  /* Tight under subhead; still below the paragraph */
+  margin-top: calc(-1 * var(--space-2));
 }
 
 .homeDrop {
@@ -103,13 +109,13 @@
     row-gap: var(--space-5);
   }
 
+  /* Row 3: sub (col1) top-aligns with first tool row (col2) — no negative nudge */
   .heroSub {
-    margin-top: -20px;
+    margin-top: 0;
   }
 
-  /* Trust block ~ aligned with mid “Merge PDFs” row in featured list */
   .heroTrust {
-    margin-top: -88px;
+    margin-top: calc(-1 * var(--space-2));
   }
 
   .heroTrust :global(.trust-bar) {
@@ -153,7 +159,7 @@
   .heroTrust {
     grid-column: 1;
     grid-row: auto;
-    margin-top: 0;
+    margin-top: calc(-1 * var(--space-2));
   }
 
   .heroToolsWrap {

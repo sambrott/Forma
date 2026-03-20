@@ -31,8 +31,9 @@
   letter-spacing: var(--tracking-tight);
   line-height: 1.02;
   color: var(--text);
-  /* Fixed 3-line block — keeps layout stable while phrase cycles (mobile + desktop) */
-  min-height: calc(3 * 1.02em);
+  /* Fixed 3-line block + a little extra for third-line descenders / blur */
+  min-height: calc(3 * 1.02em + 0.12em);
+  contain: layout style;
 }
 
 .text em {

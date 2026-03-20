@@ -50,7 +50,50 @@
     padding: var(--page-main-pt-mobile) var(--page-main-px-mobile) var(--space-16);
   }
 
+  /* Free + Pro side-by-side on narrow screens */
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-3);
+    max-width: 100%;
+  }
+
+  .grid :global(.pricing-card) {
+    padding: 16px 10px;
+    min-width: 0;
+  }
+
+  .grid :global(.pricing-tier) {
+    font-size: 10px;
+    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .grid :global(.pricing-price) {
+    font-size: 26px;
+  }
+
+  .grid :global(.pricing-price .period) {
+    font-size: 12px;
+  }
+
+  .grid :global(.feature-list) {
+    gap: 5px;
+  }
+
+  .grid :global(.feature-list li) {
+    font-size: 11px;
+    line-height: 1.35;
+    gap: 5px;
+  }
+
+  .grid :global(.feature-list li svg) {
+    width: 10px;
+    height: 10px;
+    margin-top: 2px;
+  }
+
+  .grid :global(.btn-full) {
+    padding: 8px 10px;
+    font-size: 10px;
   }
 }

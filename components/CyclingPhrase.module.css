@@ -1,17 +1,20 @@
-/* 2D crossfade cycle — one line height, clipped; optional motion blur */
+/* 2D crossfade — reserve width + vertical room so descenders (“y”, blur) aren’t clipped */
 
 .phraseClip {
   display: inline-block;
   position: relative;
   overflow: hidden;
-  min-height: 1.02em;
-  padding-bottom: 0.08em;
-  color: inherit;
   vertical-align: baseline;
-  /* Ensures blur filters composite the same on desktop as on mobile */
+  color: inherit;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   isolation: isolate;
+  /* Space for descenders + exit animation moving up; min line box */
+  min-height: 1.22em;
+  padding: 0.14em 2px 0.32em;
+  box-sizing: content-box;
+  /* Width locked to longest phrase so shorter lines don’t shift layout */
+  min-width: 13ch;
 }
 
 .phraseSizer {
@@ -30,7 +33,6 @@
   left: 0;
   top: 0;
   width: max-content;
-  max-width: 100%;
   color: inherit;
   white-space: nowrap;
   backface-visibility: hidden;
@@ -42,7 +44,6 @@
   left: auto;
   top: auto;
   width: max-content;
-  max-width: 100%;
 }
 
 .visible {

@@ -37,7 +37,8 @@ export default function HeadlineAnimation() {
     hoverBlendRef.current += (hoverTarget - hoverBlendRef.current) * 0.08
 
     const dark = document.documentElement.getAttribute('data-theme') === 'dark'
-    const baseRgb = dark ? [150, 148, 145] : [72, 68, 62]
+    /* Brighter idle dots so halftone reads in light + dark UI */
+    const baseRgb = dark ? [178, 175, 170] : [58, 54, 50]
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.save()
@@ -80,9 +81,9 @@ export default function HeadlineAnimation() {
         }
 
         const breathe = 0.5 + 0.5 * wave
-        /* Idle: always visible gray dots; hover adds orange + size */
-        const baseAlpha = 0.04 + 0.06 * breathe
-        const br = 0.88 + 0.42 * breathe
+        /* Idle: clearly visible gray; hover adds orange + size */
+        const baseAlpha = (dark ? 0.1 : 0.085) + (dark ? 0.11 : 0.095) * breathe
+        const br = 0.95 + 0.5 * breathe
 
         if (hb * ht > 0.02) {
           const orangeT = Math.pow(ht, 1.35) * hb
