@@ -4,7 +4,6 @@ import ffmpeg from 'fluent-ffmpeg'
 import ffmpegInstaller from '@ffmpeg-installer/ffmpeg'
 import { deleteFile } from '@/lib/delete-file'
 import { FREE_LIMITS } from '@/lib/limits'
-import { checkCookieRateLimit, setUsageCookie } from '@/lib/rate-limit-cookie'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -26,15 +25,6 @@ function runTrim(input: string, output: string, start: number, end: number): Pro
 }
 
 export async function POST(req: NextRequest) {
-  const rateLimit = checkCookieRateLimit(req, 'trim-video')
-  if (!rateLimit.allowed) {
-    return NextResponse.json({
-      error: `Daily limit reached. Free users get ${rateLimit.limit} uses per day.`,
-      resetAt: rateLimit.resetAt,
-      upgrade: true,
-    }, { status: 429 })
-  }
-
   let tmpInput = '', tmpOutput = ''
   try {
     const formData = await req.formData()
@@ -67,7 +57,6 @@ export async function POST(req: NextRequest) {
         'X-Forma-Processed': 'true',
       },
     })
-    setUsageCookie(response, req, 'trim-video')
     return response
   } catch (err) {
     console.error('trim-video error:', err)

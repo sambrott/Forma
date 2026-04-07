@@ -3,7 +3,6 @@ import pdf from 'pdf-parse'
 import { getAnthropic } from '@/lib/anthropic'
 import { FREE_LIMITS } from '@/lib/limits'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
-import { checkAILimit } from '@/lib/check-ai-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -17,14 +16,6 @@ export async function POST(req: NextRequest) {
 
       if (!user) {
         return NextResponse.json({ error: 'Sign in required to use AI tools.', requiresAuth: true }, { status: 401 })
-      }
-
-      const limit = await checkAILimit(user.id, 'summarise-doc')
-      if (!limit.allowed) {
-        return NextResponse.json({
-          error: `Daily limit reached. Free users get ${limit.limit} AI uses per day.`,
-          upgrade: true,
-        }, { status: 429 })
       }
     }
 

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { PDFDocument } from 'pdf-lib'
 import JSZip from 'jszip'
 import { FREE_LIMITS } from '@/lib/limits'
-import { checkCookieRateLimit, setUsageCookie } from '@/lib/rate-limit-cookie'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -29,15 +28,6 @@ function parseRanges(rangeStr: string, totalPages: number): number[][] {
 }
 
 export async function POST(req: NextRequest) {
-  const rateLimit = checkCookieRateLimit(req, 'split-pdf')
-  if (!rateLimit.allowed) {
-    return NextResponse.json({
-      error: `Daily limit reached. Free users get ${rateLimit.limit} uses per day.`,
-      resetAt: rateLimit.resetAt,
-      upgrade: true,
-    }, { status: 429 })
-  }
-
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File
@@ -70,7 +60,6 @@ export async function POST(req: NextRequest) {
         'X-Forma-Processed': 'true',
       },
     })
-    setUsageCookie(response, req, 'split-pdf')
     return response
   } catch (err) {
     console.error('split-pdf error:', err)

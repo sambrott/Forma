@@ -7,13 +7,11 @@ import ToolDrop from '@/components/ToolDrop'
 import ToolOptions, { OptionRow } from '@/components/ToolOptions'
 import ProgressBar from '@/components/ProgressBar'
 import ResultBox from '@/components/ResultBox'
-import LimitReachedModal from '@/components/LimitReachedModal'
 import { useTool } from '@/lib/use-tool'
 
 export default function ReceiptToExcelPage() {
   const [detail, setDetail] = useState('detailed')
   const { state, process, reset } = useTool('/api/receipt-to-excel')
-  const [limitModal, setLimitModal] = useState(false)
   const [showResult, setShowResult] = useState(false)
   const router = useRouter()
 
@@ -37,7 +35,7 @@ export default function ReceiptToExcelPage() {
     reset()
   }
 
-  if (state.status === 'error' && (state as any).requiresAuth) {
+  if (state.status === 'error' && (state as { requiresAuth?: boolean }).requiresAuth) {
     router.push('/login?next=/tools/receipt-to-excel')
     return null
   }
@@ -79,29 +77,15 @@ export default function ReceiptToExcelPage() {
           onReset={handleReset}
         />
       )}
-      {state.status === 'error' && !(state as any).requiresAuth && (
+      {state.status === 'error' && !(state as { requiresAuth?: boolean }).requiresAuth && (
         <div>
           <div className="alert alert-error">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             {state.error}
           </div>
-          {(state as any).upgrade && (
-            <button className="btn btn-secondary" style={{ marginTop: 12 }} onClick={() => setLimitModal(true)}>
-              View upgrade options
-            </button>
-          )}
-          {!(state as any).upgrade && (
-            <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={handleReset}>Try again</button>
-          )}
+          <button className="btn btn-ghost" style={{ marginTop: 12 }} onClick={handleReset}>Try again</button>
         </div>
       )}
-
-      <LimitReachedModal
-        isOpen={limitModal}
-        onClose={() => setLimitModal(false)}
-        limit={3}
-        isAI
-      />
     </ToolPageLayout>
   )
 }

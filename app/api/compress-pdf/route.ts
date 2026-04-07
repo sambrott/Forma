@@ -2,22 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { PDFDocument } from 'pdf-lib'
 import { deleteFile } from '@/lib/delete-file'
 import { FREE_LIMITS } from '@/lib/limits'
-import { checkCookieRateLimit, setUsageCookie } from '@/lib/rate-limit-cookie'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
-  const rateLimit = checkCookieRateLimit(req, 'compress-pdf')
-  if (!rateLimit.allowed) {
-    return NextResponse.json({
-      error: `Daily limit reached. Free users get ${rateLimit.limit} uses per day.`,
-      resetAt: rateLimit.resetAt,
-      upgrade: true,
-    }, { status: 429 })
-  }
-
   const tmpPaths: string[] = []
   try {
     const formData = await req.formData()
@@ -50,7 +40,6 @@ export async function POST(req: NextRequest) {
         'X-Forma-Processed': 'true',
       },
     })
-    setUsageCookie(response, req, 'compress-pdf')
     return response
   } catch (err) {
     console.error('compress-pdf error:', err)
