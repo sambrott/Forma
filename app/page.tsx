@@ -13,7 +13,8 @@ import styles from './page.module.css'
 const EXT_MAP: Record<string, string> = {
   pdf: 'compress-pdf',
   jpg: 'convert-image', jpeg: 'convert-image', png: 'convert-image',
-  webp: 'convert-image', heic: 'convert-image', avif: 'convert-image',
+  webp: 'convert-image', heic: 'convert-image', heif: 'convert-image', avif: 'convert-image',
+  tiff: 'convert-image', tif: 'convert-image',
   mp4: 'extract-audio', mov: 'extract-audio', avi: 'extract-audio',
   mp3: 'transcribe-audio', wav: 'transcribe-audio', m4a: 'transcribe-audio',
   json: 'json-formatter',

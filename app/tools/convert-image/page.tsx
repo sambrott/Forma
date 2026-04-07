@@ -62,7 +62,7 @@ export default function ConvertImagePage() {
     <ToolPageLayout title="Convert Image" description="Convert between HEIC, PNG, WebP, JPG, and AVIF: any format instantly.">
       {state.status === 'idle' && (
         <>
-          <ToolDrop accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.tiff" onFiles={handleFiles} label="Drop your image here" hint="JPG · PNG · WebP · HEIC · AVIF · up to 100 MB" />
+          <ToolDrop accept=".jpg,.jpeg,.png,.webp,.heic,.heif,.avif,.tiff,.tif" onFiles={handleFiles} label="Drop your image here" hint="JPG · PNG · WebP · HEIC · HEIF · AVIF · TIFF · up to 100 MB" />
           <ToolOptions>
             <OptionRow label="Output format">
               <select className="select" style={{ width: 'auto' }} value={format} onChange={e => setFormat(e.target.value)}>
@@ -70,6 +70,8 @@ export default function ConvertImagePage() {
                 <option value="png">PNG</option>
                 <option value="webp">WebP</option>
                 <option value="avif">AVIF</option>
+                <option value="heic">HEIC</option>
+                <option value="tiff">TIFF</option>
               </select>
             </OptionRow>
             <OptionRow label="Quality" hint="Affects final file size">

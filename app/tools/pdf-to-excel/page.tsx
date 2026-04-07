@@ -30,7 +30,7 @@ export default function PDFToExcelPage() {
   return (
     <ToolPageLayout title="PDF → Excel" description="AI-powered table and data extraction into clean spreadsheets.">
       {state.status === 'idle' && (
-        <ToolDrop accept=".pdf" onFiles={files => process(files[0])} label="Drop your PDF here" hint="PDF files with tables · 3 free AI uses per day" />
+        <ToolDrop accept=".pdf" onFiles={files => process(files[0])} label="Drop your PDF here" hint="PDF files with tables · up to 100 MB" />
       )}
       <ProgressBar
         active={isProcessing}

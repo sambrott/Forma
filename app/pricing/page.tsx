@@ -32,7 +32,7 @@ export default function PricingPage() {
             <li>{CHECK}All PDF tools</li>
             <li>{CHECK}Image conversion</li>
             <li>{CHECK}Developer tools</li>
-            <li>{CHECK}3 AI uses per day</li>
+            <li>{CHECK}AI-powered tools</li>
             <li className="dim">{CHECK}Up to 100 MB per file</li>
           </ul>
           <div className={styles.cardActions}>

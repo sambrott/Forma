@@ -7,7 +7,7 @@ export const TOOLS: Tool[] = [
   { slug: 'pdf-to-excel',      name: 'PDF → Excel',       desc: 'AI-powered table extraction',              cat: 'AI',    isAI: true,  icon: 'table',         accepts: ['.pdf'] },
   { slug: 'pdf-to-word',       name: 'PDF → Word',        desc: 'Convert to editable document',             cat: 'PDF',   isAI: false, icon: 'file-text',     accepts: ['.pdf'] },
   { slug: 'summarise-doc',     name: 'Summarize Doc',     desc: 'Key points from any document',             cat: 'AI',    isAI: true,  icon: 'file-lines',    accepts: ['.pdf','.docx','.txt'] },
-  { slug: 'convert-image',     name: 'Convert Image',     desc: 'HEIC, PNG, WebP, JPG: any format',        cat: 'Image', isAI: false, icon: 'image',         accepts: ['.jpg','.jpeg','.png','.webp','.heic','.avif','.tiff'] },
+  { slug: 'convert-image',     name: 'Convert Image',     desc: 'HEIC, PNG, WebP, JPG: any format',        cat: 'Image', isAI: false, icon: 'image',         accepts: ['.jpg','.jpeg','.png','.webp','.heic','.heif','.avif','.tiff','.tif'] },
   { slug: 'remove-background', name: 'Remove Background', desc: 'AI background removal in one click',       cat: 'AI',    isAI: true,  icon: 'image-off',     accepts: ['.jpg','.jpeg','.png','.webp'] },
   { slug: 'extract-audio',     name: 'Extract Audio',     desc: 'Pull MP3 from any video',                  cat: 'Audio', isAI: false, icon: 'music',         accepts: ['.mp4','.mov','.avi','.mkv','.webm'] },
   { slug: 'trim-video',        name: 'Trim Video',        desc: 'Cut to exact start and end time',          cat: 'Video', isAI: false, icon: 'video',         accepts: ['.mp4','.mov','.avi','.mkv','.webm'] },

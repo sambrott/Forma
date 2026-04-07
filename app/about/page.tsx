@@ -53,8 +53,7 @@ export default function AboutPage() {
 
         <h2 className={styles.sectionTitle}>Open about limitations</h2>
         <p>
-          Free tier is limited to 100 MB per file and 3 AI uses per day. These limits
-          exist to keep the service sustainable. Pro removes them.
+          Free tier is limited to 100 MB per file. Pro raises the cap to 2 GB and adds batch processing.
         </p>
         <p>
           Some tools (video trimming, audio extraction) depend on server-side processing

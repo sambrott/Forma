@@ -7,6 +7,9 @@ const nextConfig = {
       '@ffmpeg-installer/ffmpeg',
       'pdf-lib',
       'pdf-parse',
+      'heic-convert',
+      'heic-decode',
+      'libheif-js',
     ],
   },
   webpack: (config, { isServer }) => {

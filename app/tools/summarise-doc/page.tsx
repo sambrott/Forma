@@ -32,7 +32,7 @@ export default function SummarizeDocPage() {
   return (
     <ToolPageLayout title="Summarize Doc" description="Get key points from any document using AI: overview, themes, and conclusions.">
       {state.status === 'idle' && (
-        <ToolDrop accept=".pdf,.docx,.txt" onFiles={files => process(files[0])} label="Drop your document here" hint="PDF · DOCX · TXT · up to 100 MB · 3 free AI uses per day" />
+        <ToolDrop accept=".pdf,.docx,.txt" onFiles={files => process(files[0])} label="Drop your document here" hint="PDF · DOCX · TXT · up to 100 MB" />
       )}
       <ProgressBar
         active={isProcessing}

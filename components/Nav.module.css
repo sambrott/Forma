@@ -35,7 +35,7 @@
 }
 
 :global([data-theme="dark"]) .nav {
-  background: rgba(9, 9, 9, 0.7);
+  background: rgba(38, 38, 38, 0.72);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
 
@@ -312,7 +312,7 @@
   }
 
   :global([data-theme='dark']) .nav {
-    background: rgba(9, 9, 9, 0.94);
+    background: rgba(38, 38, 38, 0.94);
   }
 
   .nav {
@@ -369,7 +369,7 @@
   }
 
   :global([data-theme='dark']) .mobileMenu {
-    background: rgba(9, 9, 9, 0.55);
+    background: rgba(38, 38, 38, 0.58);
     backdrop-filter: blur(28px) saturate(1.55);
     -webkit-backdrop-filter: blur(28px) saturate(1.55);
     border: 0.5px solid rgba(255, 255, 255, 0.07);
