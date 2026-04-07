@@ -4,6 +4,23 @@ import { useState, useCallback } from 'react'
 import type { ProcessingState } from '@/types'
 import { FREE_LIMITS, formatFileSize } from './limits'
 
+/** Prefer RFC 5987 `filename*=UTF-8''…` so names match the server (e.g. unicode). */
+function parseContentDispositionFilename(disposition: string): string | null {
+  const star = disposition.match(/filename\*=UTF-8''([^;\s]+)/i)
+  if (star) {
+    try {
+      return decodeURIComponent(star[1])
+    } catch {
+      /* ignore */
+    }
+  }
+  const quoted = disposition.match(/filename="([^"]+)"/)
+  if (quoted) return quoted[1]
+  const plain = disposition.match(/filename=([^;\s]+)/)
+  if (plain) return plain[1].replace(/^["']|["']$/g, '')
+  return null
+}
+
 export function useTool(endpoint: string) {
   const [state, setState] = useState<ProcessingState>({
     status: 'idle', progress: 0, message: '',
@@ -52,8 +69,7 @@ export function useTool(endpoint: string) {
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
       const disposition = res.headers.get('content-disposition') || ''
-      const filenameMatch = disposition.match(/filename="?([^"]+)"?/)
-      const filename = filenameMatch?.[1] || 'forma-output'
+      const filename = parseContentDispositionFilename(disposition) || 'forma-output'
 
       const originalSize = Number(res.headers.get('x-forma-original-size')) || file.size
       const outputSize = Number(res.headers.get('x-forma-output-size')) || blob.size
@@ -88,8 +104,7 @@ export function useTool(endpoint: string) {
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
       const disposition = res.headers.get('content-disposition') || ''
-      const filenameMatch = disposition.match(/filename="?([^"]+)"?/)
-      const filename = filenameMatch?.[1] || 'forma-output.pdf'
+      const filename = parseContentDispositionFilename(disposition) || 'forma-output.pdf'
 
       setState({
         status: 'done', progress: 100, message: 'Done',

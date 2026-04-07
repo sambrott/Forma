@@ -25,6 +25,21 @@ function looksHeicFromFile(file: File): boolean {
   )
 }
 
+/** `vacation.heic` + `jpg` → `vacation-forma.jpg` (safe for Content-Disposition). */
+function buildConvertedDownloadName(originalFileName: string, outputExt: string): string {
+  const raw = originalFileName.trim() || 'image'
+  const lastSeg = raw.split(/[/\\]/).pop() || 'image'
+  const dot = lastSeg.lastIndexOf('.')
+  const base = dot > 0 ? lastSeg.slice(0, dot) : lastSeg
+  const safe =
+    base
+      .replace(/[/\\?%*:|"<>]/g, '-')
+      .replace(/\0/g, '')
+      .trim()
+      .slice(0, 120) || 'image'
+  return `${safe}-forma.${outputExt}`
+}
+
 /** HEIC/HEIF: decode with heic-convert (works without libheif in sharp). Other formats: pass through if sharp can read them. */
 async function prepareInputForSharp(input: Buffer, file: File): Promise<Buffer> {
   if (looksHeicFromFile(file) || isLikelyHeicBuffer(input)) {
@@ -138,10 +153,14 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: `Unsupported output format: ${rawFormat}` }, { status: 400 })
     }
 
+    const downloadName = buildConvertedDownloadName(file.name, filenameExt)
+    const asciiFallback = downloadName.replace(/[^\x20-\x7E]/g, '_')
+    const disposition = `attachment; filename="${asciiFallback}"; filename*=UTF-8''${encodeURIComponent(downloadName)}`
+
     return new NextResponse(new Uint8Array(outputBuffer), {
       headers: {
         'Content-Type': contentType,
-        'Content-Disposition': `attachment; filename="forma-converted.${filenameExt}"`,
+        'Content-Disposition': disposition,
         'X-Forma-Original-Size': String(originalSize),
         'X-Forma-Output-Size': String(outputBuffer.length),
         'X-Forma-Processed': 'true',
